@@ -1,19 +1,17 @@
 import React from 'react'
 import { Router, Route, Switch } from 'dva/router'
 import IndexPage from './routes/IndexPage'
-import products from './routes/Products'
+import Products from './routes/Products/Products'
 
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
       <Switch>
         <Route path="/" exact component={IndexPage} />
-        <Route path="/products" component={products} />
+        <Route path="/products" exact component={Products} />
       </Switch>
     </Router>
   )
 }
 
-export default RouterConfig;
-
- 
+export default RouterConfig
