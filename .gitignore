@@ -1,11 +1,16 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+dist
+node_modules
+yarn.lock
+npm-debug.log
 
-# dependencies
-/node_modules
+# ide
+.idea
 
-# production
-/dist
-
-# misc
+# Mac General
 .DS_Store
-npm-debug.log*
+.AppleDouble
+.LSOverride
+
+# umi
+.umi
+.umi-production
