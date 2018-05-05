@@ -29,15 +29,16 @@ export default class Shops extends Component {
       type: 'shops/fetch',
     })
   }
+  onDeleteItem = (record) => {
+    console.log('record', record)
+  }
   handleMenuClick = (record, e) => {
     if (e.key === '1') {
       this.editModal(record)
     } else if (e.key === '2') {
       confirm({
         title: '确定删除这条记录?',
-        onOk () {
-          this.props.onDeleteItem(record.id)
-        },
+        onOk: () => { this.onDeleteItem(record) },
       })
     }
   }

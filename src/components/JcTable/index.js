@@ -41,8 +41,10 @@ export default class JcTable extends Component {
     const pagePropsEx = Object.assign({
       total,
       current,
-      showTotal: noTotal ? null : () => { return `当前显示 ${((current - 1) * pageSize) + 1} 到 ${current * pageSize > total ? total : current * pageSize} 条数据,共 ${total} 条数据` },
+      showTotal: noTotal ? null : () => { return `共 ${total} 条数据` },
+      // 当前显示 ${((current - 1) * pageSize) + 1} 到 ${current * pageSize > total ? total : current * pageSize} 条数据,
       pageSize,
+      showQuickJumper: true,
       onChange: (PageIndex) => {
         dispatch({
           type: `${nameSpace}/search`,
@@ -66,13 +68,13 @@ export default class JcTable extends Component {
     const text = (
       <div>暂无数据</div>
     )
-    const popSelectedCol = this.state.custormCols && this.state.custormCols.length
-    ? this.state.custormCols.map(x => { if (x) { return x.title }else { return null}}).filter(x => x !== null) : []
-    const colsChange = (cols) => {
-      this.setState({
-        custormCols: cols,
-      })
-    }
+    // const popSelectedCol = this.state.custormCols && this.state.custormCols.length
+    // ? this.state.custormCols.map(x => { if (x) { return x.title }else { return null}}).filter(x => x !== null) : []
+    // const colsChange = (cols) => {
+    //   this.setState({
+    //     custormCols: cols,
+    //   })
+    // }
     // const popContent = (
     //   <TableTitleChoose
     //     tableName={this.props.tableName}
