@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Checkbox } from 'antd'
+import { Checkbox, Button, Input, Select, Modal } from 'antd'
 import { Page } from 'components'
 import queryString from 'query-string'
 import JcTable from '../../components/JcTable/index'
+import SearchBar from '../../components/SearchBar/index'
+import { DropOption } from 'components'
 import ShopsModal from './ShopModal'
+import styles from './shops.less'
 
+const { Option } = Select
+const { confirm } = Modal
 
 @connect(state => ({
   shops: state.shops,
 }))
-export default class User extends Component {
+export default class Shops extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -24,6 +29,18 @@ export default class User extends Component {
       type: 'shops/fetch',
     })
   }
+  handleMenuClick = (record, e) => {
+    if (e.key === '1') {
+      this.editModal(record)
+    } else if (e.key === '2') {
+      confirm({
+        title: '确定删除这条记录?',
+        onOk () {
+          this.props.onDeleteItem(record.id)
+        },
+      })
+    }
+  }
   editModal = (shops) => {
     this.setState({
       shopsModalVisiable: true,
@@ -31,11 +48,17 @@ export default class User extends Component {
       shops,
     })
   }
+  deleteAll = () => {
+    const { selectedRows, selectedRowKeys } = this.props.shops
+    const aa = selectedRows.length
+    console.log('selectedRows', selectedRows, 'selectedRowKeys', selectedRowKeys)
+    alert(`准备删除选中的${aa}条数据`)
+  }
   render () {
     const { location, shops } = this.props
     // , loading
     location.query = queryString.parse(location.search)
-    const { list, selectedRowKeys, loading, selectedRows, page, total } = shops
+    const { list, selectedRowKeys, loading, selectedRows, page, total, searchParam } = shops
     const columns = [{
         title: '编号',
         dataIndex: 'key',
@@ -79,6 +102,17 @@ export default class User extends Component {
         },
       },
       {
+        title: '店主性别',
+        dataIndex: 'sex',
+        key: 'sex',
+        width: 120,
+        render: (text) => {
+          return (
+            text === 1 ? <div>男</div> : <div>女</div>
+          )
+        },
+      },
+      {
         title: '启用',
         dataIndex: 'enable',
         key: 'enable',
@@ -95,18 +129,26 @@ export default class User extends Component {
         key: 'opreation',
         width: 140,
         render: (text, record) => {
-            return (
-              <span>
-                <a onClick={this.editModal.bind(this, record)} >编辑</a>
-              </span>
-          )
+          return <DropOption onMenuClick={e => this.handleMenuClick(record, e)} menuOptions={[{ key: '1', name: <a>编辑</a> }, { key: '2', name: <a>删除</a> }]} />
         },
+        // render: (text, record) => {
+        //     return (
+        //       <span>
+        //         <a onClick={this.editModal.bind(this, record)} >编辑</a>
+        //       </span>
+        //   )
+        // },
       }]
+      console.log('selectedRows', selectedRows, selectedRowKeys)
+    const tabelToolbar = [
+      <Button type="primary" size="small" key={1} onClick={() => this.setState({ add: true, shopsModalVisiable: true })}>新增店铺</Button>,
+      <Button type="primary" size="small" key={2} onClick={this.deleteAll} disabled={!(selectedRows && selectedRows.length)}>批量删除</Button>,
+    ]
     const tableProps = {
       // rowSelection: {
       //   type: 'radio',
       // },
-      // toolbar: tabelToolbar,
+      toolbar: tabelToolbar,
       dataSource: list,
       total,
       ...page,
@@ -132,10 +174,49 @@ export default class User extends Component {
       })
     },
   }
+  const searchBarItem = [{
+    decorator: 'comboNo',
+    components: <Input placeholder="商品编码" size="small" />,
+    }, {
+      decorator: 'comboNo',
+      components: <Input placeholder="商品编码" size="small" />,
+    }, {
+      decorator: 'comboNo',
+      components: <Input placeholder="商品编码" size="small" />,
+    }, {
+      decorator: 'comboNo',
+      components: <Input placeholder="商品编码" size="small" />,
+    }, {
+      decorator: 'comboNo',
+      components: <Input placeholder="商品编码" size="small" />,
+    }, {
+      decorator: 'comboNo',
+      components: <Input placeholder="商品编码" size="small" />,
+    }, {
+      decorator: 'enableStatus',
+      components: (
+        <Select placeholder="商品是否启用" size="small" style={{ marginTop: 4 }}>
+          <Option value="1">启用</Option>
+          <Option value="2">备用</Option>
+          <Option value="0">禁用</Option>
+        </Select>
+      ),
+    }]
+  const searchBarProps = {
+    colItems: searchBarItem,
+    dispatch: this.props.dispatch,
+    nameSpace: 'combinationItem',
+    searchParam,
+  }
     return (
       <div>
         <Page inner>
-          <JcTable {...tableProps} />
+          <div className={styles.tableList}>
+            <div className={styles.tableListForm}>
+              <SearchBar {...searchBarProps} />
+            </div>
+            <JcTable {...tableProps} />
+          </div>
         </Page>
         {this.state.shopsModalVisiable ? <ShopsModal {...shopsModalProps}/> : null}
       </div>

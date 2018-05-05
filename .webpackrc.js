@@ -1,7 +1,8 @@
 import { resolve } from 'path';
 
 export default {
-  theme: "./theme.config.js",
+  // theme: "./theme.config.js",
+  "theme": "./src/utils/theme.js",
   // 接口代理示例
   proxy: {
     "/api/v1/weather": {
