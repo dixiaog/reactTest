@@ -1,26 +1,10 @@
-
 export default {
-  plugins: [
-    'umi-plugin-dva',
-    [
-      'umi-plugin-routes',
-      {
-        exclude: [
-          /model\.(j|t)sx?$/,
-          /service\.(j|t)sx?$/,
-          /models\//,
-          /components\//,
-          /services\//,
-          /chart\/Container\.js$/,
-        ],
-      },
-    ],
-    [
-      'umi-plugin-dll',
-      {
-        exclude: [],
-        include: ["dva", "dva/router", "dva/saga", "dva/fetch", "antd/es"],
-      },
-    ],
-  ],
+  pages: {
+    "/print": { document: './src/pages/print.ejs' },
+  },
+  plugins: ['umi-plugin-dva'],
+  hashHistory: true,
+  context: {
+    title: '雪冰电商',
+  },
 }

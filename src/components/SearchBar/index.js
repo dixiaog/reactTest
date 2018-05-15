@@ -1,8 +1,8 @@
 /*
  * @Author: jchen
  * @Date: 2017-10-11 13:31:41
- * @Last Modified by: jiangteng
- * @Last Modified time: 2018-04-21 09:51:48
+ * @Last Modified by: chenjie
+ * @Last Modified time: 2018-05-09 09:58:32
  * 顶部搜索
  * @param
  *  @colItems:[{
@@ -81,6 +81,7 @@ export default class SearchBar extends React.Component {
     handleFormReset() {
       this.props.form.resetFields()
       this.props.clear ? this.props.clearState() : null
+      this.props.reset ? this.props.reset() : null
       const { nameSpace, dispatch, requestParam } = this.props
       dispatch({
         type: `${nameSpace}/search`,
@@ -117,9 +118,10 @@ export default class SearchBar extends React.Component {
                 }
               } else {
                 let initVal = searchParam && searchParam[ele.decorator] !== undefined ? searchParam[ele.decorator] : undefined
-                if (ele.components.props.prefixCls === 'ant-calendar') { // 此处需要推敲，时间默认值为monet类型
+                if (ele.components.props.prefixCls === 'ant-calendar') { 
                   initVal = searchParam && searchParam[ele.decorator] ? moment(searchParam[ele.decorator]) : undefined
                 }
+                console.log('initVal',initVal)
                 const formItem = (
                   <FormItem >
                     {getFieldDecorator(ele.decorator, {

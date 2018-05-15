@@ -1,29 +1,72 @@
-import { routerRedux } from 'dva/router'
-import { login } from '../services/login'
+import { fakeAccountLogin } from '../services/sym/login'
+import router from 'umi/router'
 
 export default {
   namespace: 'login',
 
-  state: {},
+  state: {
+    status: undefined,
+    token: '',
+    userDTO: {},
+    submitting: false,
+  },
 
   effects: {
-    * login ({
-      payload,
-    }, { put, call, select }) {
-      const data = yield call(login, payload)
-      const { locationQuery } = yield select(_ => _.app)
-      if (data.success) {
-        const { from } = locationQuery
-        yield put({ type: 'app/query' })
-        if (from && from !== '/login') {
-          yield put(routerRedux.push(from))
-        } else {
-          yield put(routerRedux.push('/dashboard'))
-        }
-      } else {
-        throw data
+    *accountSubmit({ payload }, { call, put }) {
+      yield put({
+        type: 'changeState',
+        payload: { submitting: true },
+      })
+      const response = yield call(fakeAccountLogin, payload)
+      try {
+        const status = response.userDTO.userNo ? true : false
+        yield put({
+          type: 'changeState',
+          payload: { ...response, status, submitting: false },
+        })
+      } catch (err) {
+        yield put({
+          type: 'changeState',
+          payload: { submitting: false },
+        })
       }
+    },
+    // *mobileSubmit(_, { call, put }) {
+    //   yield put({
+    //     type: 'changeSubmitting',
+    //     payload: true,
+    //   })
+    //   const response = yield call(fakeMobileLogin)
+    //   yield put({
+    //     type: 'changeLoginStatus',
+    //     payload: response,
+    //   })
+    //   yield put({
+    //     type: 'changeSubmitting',
+    //     payload: false,
+    //   })
+    // },
+    *logout(_, { put }) {
+      yield put({
+        type: 'changeState',
+        payload: {
+          status: false,
+        },
+      })
+      window.localStorage.clear()
+      window.location.reload()
+      router.replace('/user/login')
+      // window.location.href = window.location.hash
+      // yield put(routerRedux.push('/user/login'))
     },
   },
 
+  reducers: {
+    changeState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      }
+    },
+  },
 }

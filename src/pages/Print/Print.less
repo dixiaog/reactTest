@@ -1,0 +1,237 @@
+
+.head {
+  transition: opacity 0.5s;
+  background: #fff;
+  height: 100px;
+  padding: 5px 8px;
+  overflow: hidden;
+}
+.headPreview {
+  transition: opacity 0.5s;
+  background: #fff;
+  height: 80px;
+  padding: 5px 8px;
+  overflow: hidden;
+}
+.headRow {
+  height: 35px;
+  line-height: 30px;
+  overflow: hidden;
+}
+
+.editRow {
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  border-bottom: 1px solid #4f4f4f;
+}
+
+.main {
+  width: 80%;
+  height: 100vh;
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.Container{
+  display: inline-block;
+	position: relative;
+  overflow: hidden;
+  margin-left: 20px;
+  border: 1px solid #e3e3e3;
+  border-bottom-color: #e0e0e0;
+  border-right-color: #ececec;
+  box-shadow: 1px 2px 1px rgba(0,0,0,.072);
+  -webkit-box-shadow: 1px 2px 1px rgba(0,0,0,.072);
+  -moz-box-shadow: 1px 2px 1px rgba(0,0,0,.072);
+  -o-box-shadow: 1px 2px 1px rgba(0,0,0,.072);
+}
+.tabaleGrid {
+  position: absolute;
+  width: 21cm;
+  height: 29.7cm;
+  top:0px;
+  left: 0p;
+}
+
+:global {
+  .ant-input-group-addon {
+    background-color: #f5f5f5;
+  }
+}
+.side {
+  padding: 0 8px 8px;
+  //width: 20%;
+  //min-width: 250px;
+  width:251px;
+  background: #fff;
+  overflow: auto;
+  position: absolute;
+  right: 0;
+  top: 80,
+}
+.side::-webkit-scrollbar {
+	width: 6px;
+  height: 6px;
+}
+.side::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 10px;
+}
+.setting {
+  border: 1px solid #f5f5f5;
+  padding: 8px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.setting_input {
+  width: 98%;
+}
+.setting_label {
+  color: #b1b1b1;
+  font-size:12px;
+}
+.set_h3 {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+.set_h4 {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-top: 12px;
+}
+.box {}
+.custbox {
+  margin-top: 7px;
+}
+.custbox > span {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 5px;
+}
+.dataArea {
+  border: 0;
+}
+.dataArea button {
+  cursor: grab;
+}
+.dataArea button:active {
+  cursor: grabbing;
+}
+.mt5 {
+  margin-top: 5px;
+}
+.mt8 {
+  margin-top: 8px;
+}
+.mb5 {
+  margin-bottom: 5px;
+}
+.mc {
+  margin: 0 auto;
+}
+.tc {
+  text-align: center;
+}
+.tr {
+  text-align: right;
+}
+
+.lineCss{
+  padding: 2px 4px;
+  margin: 5px;
+  cursor: pointer;
+  display: inline-block;
+  border-width: 1px;
+  border-color: #eee;
+  
+}
+
+.lineCss:hover{
+  border-color: #108ee9;
+  color: #108ee9;
+}
+
+.boxCss{
+  padding: 2px 4px;
+  margin: 5px;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px #eee solid;
+}
+
+.boxCss:hover{
+  border-color: #108ee9;
+  color: #108ee9;
+}
+
+.tableWarper {
+  position: absolute;
+  background-color: rgba(193, 193, 193,0.36);
+  //white-space: nowrap;
+  padding: 6px;
+  z-index: 1;
+  border-radius: 5px;
+  cursor: move;
+}
+.table {
+  position: relative;
+  border: 1px solid #696969;
+  color: #999;
+  width: auto;
+  height: auto;
+  z-index: 1;
+  vertical-align: middle;
+  overflow: hidden;
+  text-shadow: 0 0 1px #fff;
+  border-collapse: collapse;
+  background-color: #fff;
+  //white-space: nowrap;
+  cursor: default;
+  display: flex;
+  //flex-wrap: wrap;
+}
+
+.column {
+  display: inline-block;
+  border-right: 1px solid #696969;
+  //margin-bottom:-3000px; padding-bottom:3000px;
+}
+.column:last-child {
+  border-right: 0;
+}
+.thWarper {
+  border-bottom: 1px solid #696969;
+  overflow: hidden;
+}
+.tdWarper {
+  overflow: hidden;
+}
+.column .th {
+  color: #333;
+  font-weight: normal;
+  display: block;
+  position: relative;
+  clear: both;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2px;
+}
+.column .td {
+  color: #999;
+  display: block;
+  position: relative;
+  clear: both;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 2px;
+}
+.column .active{
+  background: yellow;
+}

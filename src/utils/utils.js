@@ -3,6 +3,19 @@ import cloneDeep from 'lodash/cloneDeep'
 import config from './config'
 // import navData from '../common/nav'
 import numeral from 'numeral'
+import { getOtherStore } from './otherStore'
+
+
+export function effectFetch(key,dispatch) {
+  const otherStore = getOtherStore()
+  console.log(getOtherStore())
+  const tabKeys = getLocalStorageItem('tabKeys')
+  const isInTab = tabKeys ? tabKeys.split(',').indexOf(key) > -1 : false // 判断是否在tablist中存在
+  console.log('otherStore', otherStore[key])
+  if (!otherStore[key] || (otherStore[key].list.length === 0 && !isInTab)||getLocalStorageItem('forceRefresh') === key) {
+    dispatch({ type: `${key}/fetch` })
+  }
+}
 
 export function checkEmpty(data) {
   if (!data || data.trim() === '') {

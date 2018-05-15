@@ -1,0 +1,94 @@
+@import "~antd/lib/style/themes/default.less";
+@import "../../utils/utils.less";
+
+.dynamic {
+    box-sizing:border-box;
+    color:rgb(153, 153, 153);
+    cursor:pointer;
+    font-size:24px;
+    height:24px;
+    line-height:24px;
+    position:relative;
+    text-align:center;
+    top:4px;
+    width:24px;
+  }
+  .dynamic:hover {
+    color: #777;
+  }
+  .dynamic[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .editablecell {
+    position: relative;
+  }
+  
+  .editablecellinputwrapper,
+  .editablecelltextwrapper {
+    padding-right: 24px;
+  }
+  
+  .editablecelltextwrapper {
+    padding: 5px 24px 5px 5px;
+  }
+  
+  .editablecellicon,
+  .editablecelliconcheck {
+    position: absolute;
+    right: 0;
+    width: 20px;
+    cursor: pointer;
+  }
+  
+  .editablecellicon {
+    line-height: 8px;
+    display: none;
+  }
+  
+  .editablecelliconcheck {
+    line-height: 28px;
+  }
+  
+  .editablecell:hover .editablecellicon {
+    display: inline-block;
+  }
+  
+  .editablecellicon:hover,
+  .editablecelliconcheck:hover {
+    color: #108ee9;
+  }
+  
+  .editableaddbtn {
+    margin-bottom: 8px;
+  }
+  .dynamicdeletebutton {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all .3s;
+  }
+  .dynamicdeletebutton:hover {
+    color: #777;
+  }
+  .dynamicdeletebutton[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .gutterexample .antrow > div {
+    background: transparent;
+    border: 0;
+  }
+  .gutterbox {
+    // background: #00A0E9;
+    padding: 5px 0;
+    text-align: center;
+    display:block;                     /*内联对象需加*/
+    width:100%;
+    word-break:keep-all;           /* 不换行 */
+    white-space:nowrap;          /* 不换行 */
+    overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow:ellipsis;         /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+  }
