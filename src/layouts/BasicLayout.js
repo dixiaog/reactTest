@@ -85,7 +85,7 @@ class BasicLayout extends React.Component {
         let isHad = false
         tabList.forEach((ele) => {
           Object.assign(ele, { default: false })
-          if (ele.key === currentK[1]) {
+          if (ele.key === currentK[currentK.length - 1]) {
             isHad = true
             Object.assign(ele, { default: true })
           }
@@ -93,27 +93,13 @@ class BasicLayout extends React.Component {
         if (current && Object.keys(current).length) {
           if (!isHad) {
             tabList.push({
-              key: currentK[1],
+              key: currentK[currentK.length - 1],
               path: nextProps.location.pathname,
               tab: current.name,
               default: true,
             })
           }
-        } else if (currentK[2] === 'giftStrategy') {
-          tabList.push({
-            key: currentK[2],
-            path: nextProps.location.pathname,
-            tab: '赠品规则',
-            default: true,
-          })
-        } else if (currentK[2] === 'approveStrategy') {
-        tabList.push({
-          key: currentK[2],
-          path: nextProps.location.pathname,
-          tab: '订单审核',
-          default: true,
-        })
-      } else {
+        } else {
         router.replace('/Exception/404')
         tabList.push({
           key: '404',
@@ -424,6 +410,7 @@ class BasicLayout extends React.Component {
   render() {
     const { currentUser, collapsed, menus } = this.props
     console.log('menusmenus', menus)
+    console.log('this.props', this.props)
     const { tabList } = this.state
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
