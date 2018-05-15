@@ -9,6 +9,8 @@ export default {
     token: '',
     userDTO: {},
     submitting: false,
+    menus: [],
+    premissions: [],
   },
 
   effects: {

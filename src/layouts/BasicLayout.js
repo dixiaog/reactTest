@@ -423,6 +423,7 @@ class BasicLayout extends React.Component {
 
   render() {
     const { currentUser, collapsed, menus } = this.props
+    console.log('menusmenus', menus)
     const { tabList } = this.state
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>

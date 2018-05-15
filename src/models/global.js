@@ -48,6 +48,7 @@ export default {
       if (response !== null) {
         const menus = menusRestruct(response)
         const newMenus = menusReview(menus)
+        console.log('menus', menus, 'newMenus', newMenus)
         yield put({
           type: 'showMenus',
           payload: newMenus.filter(e => typeof e === 'object' && e.children && e.children.length > 0),
@@ -97,7 +98,26 @@ export default {
     showMenus(state, { payload }) {
       return {
         ...state,
-        menus: payload,
+        // menus: payload,
+        menus: [{
+          name: '仪表盘',
+          path: 'dashboard',
+          icon: 'dashboard',
+          children: [{
+            name: '首页',
+            path: 'analysis',
+            icon: 'book',
+          }],
+        }, {
+          name: '系统',
+          path: 'system',
+          icon: 'desktop',
+          children: [{
+            name: '用户管理',
+            path: 'users',
+            icon: 'user',
+          }],
+        }]
       }
     },
   },

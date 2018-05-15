@@ -8,8 +8,6 @@ import { LocaleProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import { requireAuth } from '../utils/utils'
 import Error from '../pages/Exception/401'
-import ShopSuccess from '../pages/Base/ShopSuccess/index'
-import ShopFailed from '../pages/Base/ShopFailed/index'
 
 
 class BaseLayout extends React.Component {
@@ -24,11 +22,7 @@ class BaseLayout extends React.Component {
         </LocaleProvider> : <Redirect to="/User/Login" />
     } else if (pathname === '/Exception/401'){
       return <Error />
-    } else if (pathname === '/base/shopSuccess'){ 
-      return <ShopSuccess />
-    } else if (pathname === '/base/shopFailed'){
-      return <ShopFailed />
-    } else {
+    }else {
       return requireAuth() ? <LocaleProvider locale={zhCN}><BasicLayout {...this.props}/></LocaleProvider> : <Redirect to="/User/Login" /> //<Error />
     }
     

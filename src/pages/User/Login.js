@@ -77,6 +77,7 @@ export default class Login extends Component {
   }
 
   render() {
+    console.log('nextProps.login', this.props.login)
     const { form, login } = this.props
     const { getFieldDecorator } = form
     const { type } = this.state
