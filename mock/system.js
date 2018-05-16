@@ -203,7 +203,6 @@ export function userList(count, searchParam) {
       busMan: ['无', '客户A', '客户B'],
     })
   }
-  console.log(searchParam)
   if (searchParam && searchParam.userName) {
     list = list.filter(ele => ele.userName.indexOf(searchParam.userName) > -1)
   }

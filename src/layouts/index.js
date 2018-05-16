@@ -1,31 +1,60 @@
+// import Redirect from 'umi/redirect'
+import { LocaleProvider } from 'antd'
+import zh_CN from 'antd/lib/locale-provider/zh_CN'
 import React from 'react'
 import withRouter from 'umi/withRouter'
-import Redirect from 'umi/redirect'
-import BasicLayout from './BasicLayout'
-import PrintLayout from './PrintLayout'
-import UserLayout from './UserLayout'
-import { LocaleProvider } from 'antd'
-import zhCN from 'antd/lib/locale-provider/zh_CN'
-import { requireAuth } from '../utils/utils'
-import Error from '../pages/Exception/401'
+import { connect } from 'dva'
+import Title from './Title'
+import Login from '../pages/Login/index'
+import Exception from '../pages/Exception/404.js'
+import Exception401 from '../pages/Exception/401.js'
 
-
+@connect(state => ({
+  global: state.global,
+}))
 class BaseLayout extends React.Component {
   render () {
     const { pathname } = this.props.location
-    if (pathname.toLowerCase().split('/')[1] === 'user') {
-      return <UserLayout {...this.props} />
-    } else if (pathname.toLowerCase().split('/')[1] === 'print'){
-      return requireAuth() ?
-        <LocaleProvider locale={zhCN}>
-          <PrintLayout {...this.props}/>
-        </LocaleProvider> : <Redirect to="/User/Login" />
-    } else if (pathname === '/Exception/401'){
-      return <Error />
-    }else {
-      return requireAuth() ? <LocaleProvider locale={zhCN}><BasicLayout {...this.props}/></LocaleProvider> : <Redirect to="/User/Login" /> //<Error />
+    const { tabList, panes } = this.props.global
+    if (pathname === '/login') {
+      return <Login />
+    } else if (window.localStorage.getItem('JT')) {
+      let flag = []
+      if (tabList && tabList.length) {
+        flag = tabList.filter(ele => ele.url === pathname)
+        // 判断当前页面是否已经存在(打开)
+        const index = panes.findIndex(ele => ele.url === pathname)
+        // 当前页面不存在(未打开)
+        if (index === -1) {
+          const index = tabList.findIndex(ele => ele.url === pathname)
+          // 判断当前页面是否是有效页面
+          if(index !== -1) {
+            panes.push({ key: tabList[index].key, title: tabList[index].tab, url: tabList[index].url })
+            this.props.dispatch({ 
+              type: 'global/changeState',
+              payload: { panes, current: tabList[index].key, activeKey: tabList[index].key, title: tabList[index].tab },
+            })
+          }
+        }
+      }
+      if (flag.length) {
+        return (
+          <LocaleProvider locale={zh_CN}>
+            <div>
+              <Title />
+              {this.props.children}
+            </div>
+          </LocaleProvider>
+        )
+      } else {
+        return (
+          <Exception />
+        )
+      }
+    } else {
+      // return <Redirect to="/login" />
+      return <Exception401 />
     }
-    
   }
 }
 

@@ -1,123 +1,126 @@
-import { queryNotices } from '../services/api'
-import { menusRestruct, menusReview } from '../utils/utils'
-import { getMenus } from '../services/sym/menus'
 
 export default {
   namespace: 'global',
 
   state: {
-    collapsed: false,
-    isMinSize: document.body.clientWidth < 769,
-    notices: [],
-    fetchingNotices: false,
-    menus: [],
-    tabList: [{
-      key: 'analysis',
-      path: '/dashboard/analysis',
+    panes: [{
+      key: '/',
+      title: '首页', 
+      url: '/',
+      closable: false,
+    }], // 记录选取的菜单
+    tabList: [{ // 存放所有一级菜单
+      key: '/',
       tab: '首页',
-      default: true,
+      url: '/',
+    }, {
+      key: '/user',
+      tab: '用户列表',
+      url: '/base/user',
+    }, {
+      key: '/dictionary',
+      tab: '数据字典',
+      url: '/base/dictionary',
+    }, {
+      key: '/wechat',
+      tab: '微信用户',
+      url: '/base/wechat',
+    }, {
+      key: '/shop',
+      tab: '店铺管理',
+      url: '/base/shop',
+    }, {
+      key: '/category',
+      tab: '商品类目',
+      url: '/base/category',
+    }, {
+      key: '/software',
+      tab: '软件列表',
+      url: '/base/software',
+    },{
+      key: '/role',
+      tab: '角色列表',
+      url: '/sys/role',
+    }, {
+      key: '/power',
+      tab: '权限管理',
+      url: '/sys/power',
+    }, {
+      key: '/menu',
+      tab: '菜单管理',
+      url: '/sys/menu',
+    }, {
+      key: '/task',
+      tab: '任务管理',
+      url: '/sys/task',
     }],
+    TabList: [{
+      text: '基础信息',
+      children: [{
+        key: '/',
+        tab: '首页',
+        url: '/',
+      }, {
+        key: '/user',
+        tab: '用户列表',
+        url: '/base/user',
+      }, {
+        key: '/dictionary',
+        tab: '数据字典',
+        url: '/base/dictionary',
+      }, {
+        key: '/wechat',
+        tab: '微信用户',
+        url: '/base/wechat',
+      }, {
+        key: '/shop',
+        tab: '店铺管理',
+        url: '/base/shop',
+      }, {
+        key: '/category',
+        tab: '商品类目',
+        url: '/base/category',
+      }, {
+        key: '/software',
+        tab: '软件列表',
+        url: '/base/software',
+      }],
+    },{
+      text: '系统设置',
+      children: [{
+        key: '/role',
+        tab: '角色列表',
+        url: '/sys/role',
+      }, {
+        key: '/power',
+        tab: '权限管理',
+        url: '/sys/power',
+      }, {
+        key: '/menu',
+        tab: '菜单管理',
+        url: '/sys/menu',
+      }, {
+        key: '/task',
+        tab: '任务管理',
+        url: '/sys/task',
+      }],
+    }],
+    title: '首页',
+    refresh: false,
+    current: '/', // 下拉菜单当前选中
+    activeKey: '/', // 激活的按钮
   },
 
   effects: {
-    *fetchNotices(_, { call, put }) {
-      yield put({
-        type: 'changeNoticeLoading',
-        payload: true,
-      })
-      const data = yield call(queryNotices)
-      yield put({
-        type: 'saveNotices',
-        payload: data,
-      })
-    },
-    *clearNotices({ payload }, { put, select }) {
-      const count = yield select(state => state.global.notices.length)
-      yield put({
-        type: 'user/changeNotifyCount',
-        payload: count,
-      })
-
-      yield put({
-        type: 'saveClearedNotices',
-        payload,
-      })
-    },
-    *getMenus(_, { call, put }) {
-      const response = yield call(getMenus)
-      if (response !== null) {
-        const menus = menusRestruct(response)
-        const newMenus = menusReview(menus)
-        console.log('menus', menus, 'newMenus', newMenus)
-        yield put({
-          type: 'showMenus',
-          payload: newMenus.filter(e => typeof e === 'object' && e.children && e.children.length > 0),
-        })
-      } else {
-        yield put({
-          type: 'showMenus',
-          payload: [],
-        })
-      }
+    *fetch() {
     },
   },
 
   reducers: {
-    changeTabList(state, { payload }) {
+    changeState(state, { payload }) {
       return {
         ...state,
-        tabList: payload,
-      }
-    },
-    changeLayoutCollapsed(state, { payload }) {
-      return {
-        ...state,
-        collapsed: payload,
-        isMinSize: document.body.clientWidth < 769,
-      }
-    },
-    saveNotices(state, { payload }) {
-      return {
-        ...state,
-        notices: payload,
-        fetchingNotices: false,
-      }
-    },
-    saveClearedNotices(state, { payload }) {
-      return {
-        ...state,
-        notices: state.notices.filter(item => item.type !== payload),
-      }
-    },
-    changeNoticeLoading(state, { payload }) {
-      return {
-        ...state,
-        fetchingNotices: payload,
-      }
-    },
-    showMenus(state, { payload }) {
-      return {
-        ...state,
-        // menus: payload,
-        menus: [{
-          name: '仪表盘',
-          path: 'dashboard',
-          icon: 'dashboard',
-          children: [{
-            name: '首页',
-            path: 'analysis',
-            icon: 'book',
-          }],
-        }, {
-          name: '系统',
-          path: 'system',
-          icon: 'desktop',
-          children: [{
-            name: '用户管理',
-            path: 'users',
-            icon: 'user',
-          }],
-        }]
+        ...payload,
       }
     },
   },

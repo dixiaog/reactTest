@@ -1,50 +1,49 @@
-import { getLocalStorageItem } from '../utils/utils'
+import { getUserList } from '../services/base'
 
 export default {
   namespace: 'user',
 
   state: {
     list: [],
+    total: 0,
+    page: {},
+    selectedRows: [],
+    selectedRowKeys: [],
     loading: false,
-    currentUser: {},
+    searchParam: {},
   },
 
   effects: {
-    *fetchCurrent(_, { call, put }) {
-      const response = JSON.parse(getLocalStorageItem('user'))
+    *fetch({ payload }, { call, put, select }) {
       yield put({
-        type: 'saveCurrentUser',
-        payload: response,
+        type: 'changeState',
+        payload: { loading: true },
+      })
+      const searchParam = payload && payload.searchParam ? payload.searchParam : yield select(state => state.user.searchParam)
+      const page = payload && payload.page ? payload.page : Object.assign(yield select(state => state.user.page))
+      const {data} = yield call(getUserList, { ...searchParam, ...page })
+      yield put({
+        type: 'changeState',
+        payload: { ...data, total: data.total, loading: false },
+      })
+    },
+    *search({ payload }, { call, put, select }) {
+      const statePage = yield select(state => state.user.page)
+      const page = payload && payload.page ? Object.assign(statePage, payload.page) : statePage
+      const searchParam = payload && payload.searchParam ? payload.searchParam : yield select(state => state.user.searchParam)
+      const {data} = yield call(getUserList, { ...searchParam, ...page })
+      yield put({
+        type: 'changeState',
+        payload: { ...data, total: data.total, loading: false },
       })
     },
   },
 
   reducers: {
-    save(state, action) {
+    changeState(state, { payload }) {
       return {
         ...state,
-        list: action.payload,
-      }
-    },
-    changeLoading(state, action) {
-      return {
-        ...state,
-        loading: action.payload,
-      }
-    },
-    saveCurrentUser(state, action) {
-      return {
-        ...state,
-        currentUser: action.payload,
-      }
-    },
-    changeNotifyCount(state, action) {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          notifyCount: action.payload,
-        },
+        ...payload,
       }
     },
   },

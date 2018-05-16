@@ -1,65 +1,36 @@
-import { fakeAccountLogin } from '../services/sym/login'
+import { fakeAccountLogin } from '../services/login'
 import router from 'umi/router'
 
 export default {
   namespace: 'login',
 
   state: {
-    status: undefined,
-    token: '',
-    userDTO: {},
-    submitting: false,
-    menus: [],
-    premissions: [],
+    toIndex: false,
   },
 
   effects: {
-    *accountSubmit({ payload }, { call, put }) {
-      yield put({
-        type: 'changeState',
-        payload: { submitting: true },
-      })
+    *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload)
-      try {
-        const status = response.userDTO.userNo ? true : false
+      console.log('response', response)
+      if (response && response.token) {
         yield put({
           type: 'changeState',
-          payload: { ...response, status, submitting: false },
+          payload: { toIndex: true },
         })
-      } catch (err) {
-        yield put({
-          type: 'changeState',
-          payload: { submitting: false },
-        })
+        window.localStorage.setItem('userName', response.userName)
+        window.localStorage.setItem('JT', response.token)
+        window.localStorage.setItem('panes', JSON.stringify([{
+          key: '1',
+          title: '首页', 
+          url: '/',
+          closable: false,
+        }]))
+        router.push('/')
       }
-    },
-    // *mobileSubmit(_, { call, put }) {
-    //   yield put({
-    //     type: 'changeSubmitting',
-    //     payload: true,
-    //   })
-    //   const response = yield call(fakeMobileLogin)
-    //   yield put({
-    //     type: 'changeLoginStatus',
-    //     payload: response,
-    //   })
-    //   yield put({
-    //     type: 'changeSubmitting',
-    //     payload: false,
-    //   })
-    // },
-    *logout(_, { put }) {
-      yield put({
-        type: 'changeState',
-        payload: {
-          status: false,
-        },
-      })
-      window.localStorage.clear()
-      window.location.reload()
-      router.replace('/user/login')
-      // window.location.href = window.location.hash
-      // yield put(routerRedux.push('/user/login'))
+      // yield put({
+      //   type: 'changeState',
+      //   payload: { userName: response.userDTO.userName },
+      // })
     },
   },
 

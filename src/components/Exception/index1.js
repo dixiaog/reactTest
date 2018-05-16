@@ -20,7 +20,7 @@ export default ({ className, linkElement = 'a', type, title, desc, img, actions,
         <div className={styles.desc}>登陆失效，请重新登陆</div>
         <div className={styles.actions}>
           <Button type="primary" onClick={() => {
-            window.location.href = `/#/user/login`
+            window.location.href = `/#/login`
             window.location.reload()
         }}>返回登陆页面</Button>
         </div>
