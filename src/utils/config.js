@@ -1,6 +1,6 @@
-const APIV1 = 'http://10.101.4.102:8080/bsdyun-ecom-oms' // 测试地址，勿删
+const APIV1 = 'http://10.101.4.102:8080/bsdyun-ecom-oms'
 const WMS = 'http://10.101.4.104:8080/bsdyun-ecom-wms'
-// const APIV1 = 'http://172.16.17.94:8105' // 全家桶地址
+// const APIV1 = 'http://172.16.17.94:8105'
 
 module.exports = {
   // name: '雪冰电商',

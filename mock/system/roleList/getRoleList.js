@@ -32,9 +32,17 @@ export function getRoleList(req, res, u, b) {
     const count = (params.count * 1) || 20
     const result = getList(count, searchParam)
     if (res && res.json) {
-      res.json(result)
+      res.json({
+        success: true,
+        data: result,
+        errorMessage: '',
+      })
     } else {
-      return result
+      return {
+        success: true,
+        data: result,
+        errorMessage: '',
+      }
     }
 }
 

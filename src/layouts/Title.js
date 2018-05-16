@@ -9,7 +9,7 @@ import PageHeader from './PageHeader'
 export default class Title extends Component {
   render() {
     return (
-      <DocumentTitle title={`全家-${this.props.global.title}`}>
+      <DocumentTitle title={`测试-${this.props.global.title}`}>
         <PageHeader />
       </DocumentTitle>
     )

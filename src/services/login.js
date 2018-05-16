@@ -10,9 +10,9 @@ export async function fakeAccountLogin(params) {
 }
 
 // 获取菜单
-export async function getMenus(params) {
-  return request(`${config.APIV1}/MyAuthority/getMenusByUserName`, {
-    method: 'POST',
-    body: params,
-  })
-}
+// export async function getMenus(params) {
+//   return request(`${config.APIV1}/MyAuthority/getMenusByUserName`, {
+//     method: 'POST',
+//     body: params,
+//   })
+// }

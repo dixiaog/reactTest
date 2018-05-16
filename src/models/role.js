@@ -25,7 +25,7 @@ export default {
       const response = yield call(getRoleList, { ...searchParam, ...page })
       yield put({
         type: 'changeState',
-        payload: { ...response, total: response.total, loading: false },
+        payload: { ...response.data, total: response.data.total, loading: false },
       })
     },
     *search({ payload }, { call, put, select }) {
@@ -35,7 +35,7 @@ export default {
       const response = yield call(getRoleList, { ...searchParam, ...page })
       yield put({
         type: 'changeState',
-        payload: { ...response, total: response.total, loading: false },
+        payload: { ...response.data, total: response.data.total, loading: false },
       })
     },
     *getChooseData({ payload }, { call, put, select }) {

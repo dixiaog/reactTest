@@ -23,9 +23,10 @@ export default {
       const searchParam = payload && payload.searchParam ? payload.searchParam : yield select(state => state.power.searchParam)
       const page = payload && payload.page ? payload.page : Object.assign(yield select(state => state.power.page))
       const response = yield call(getPowerList, { ...searchParam, ...page })
+      console.log('response', response)
       yield put({
         type: 'changeState',
-        payload: { ...response, total: response.total, loading: false },
+        payload: { ...response.data, total: response.data.total, loading: false },
       })
     },
     *search({ payload }, { call, put, select }) {
@@ -35,7 +36,7 @@ export default {
       const response = yield call(getPowerList, { ...searchParam, ...page })
       yield put({
         type: 'changeState',
-        payload: { ...response, total: response.total, loading: false },
+        payload: { ...response.data, total: response.data.total, loading: false },
       })
     },
     *getChooseData({ payload }, { call, put, select }) {

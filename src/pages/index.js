@@ -14,7 +14,7 @@ export default class Login extends Component {
   render() {
     return (
       <div>
-        这里显示首页
+        首页
       </div>
     )
   }
