@@ -18,7 +18,7 @@ class BaseLayout extends React.Component {
     const { tabList, panes } = this.props.global
     if (pathname === '/login') {
       return <Login />
-    } else if (window.localStorage.getItem('JT')) {
+    } else if (window.localStorage.getItem('token')) {
       let flag = []
       if (tabList && tabList.length) {
         flag = tabList.filter(ele => ele.url === pathname)

@@ -1,5 +1,5 @@
 export function getLocalStorageItem() {
-  return window.localStorage.getItem('JT')
+  return window.localStorage.getItem('token')
 }
 
 export function shouldUpdate() {
