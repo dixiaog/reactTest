@@ -185,7 +185,7 @@ export default class PageHeader extends Component {
     const menuPanel = (
       <Menu style={{ top: 5, left: 10 }}>
         <Menu.Item>
-          <a onClick={this.closeThis}>关闭标签111</a>
+          <a onClick={this.closeThis}>关闭标签</a>
         </Menu.Item>
         <Menu.Item>
           <a onClick={this.closeOther}>关闭其他全部</a>
