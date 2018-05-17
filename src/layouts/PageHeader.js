@@ -236,9 +236,10 @@ export default class PageHeader extends Component {
               type="editable-card"
               onEdit={this.onEdit}
               hideAdd={true}
+              className={styles.tabs}
               tabBarExtraContent={operations}
             >
-            {/* // className={styles.tabs}
+            {/* // 
             // activeKey={tabDefaultValue.key} */}
               {panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
             </Tabs>

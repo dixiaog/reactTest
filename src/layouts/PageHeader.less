@@ -1,3 +1,4 @@
+@import "~antd/lib/style/themes/default.less";
 .header {
   :global {
     .ant-menu-horizontal{
@@ -125,4 +126,26 @@
 .paneRight{
   float: left; 
   width: e("calc(100% - 20px)");
+}
+
+.tabs {
+  margin: 0 0 -1px 10px;
+
+  :global {
+    .ant-tabs-nav-wrap {
+      margin-top: 5px;
+    }
+    .ant-tabs-bar {
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+      > .ant-tabs-nav-container{
+        height: 33px;
+      }
+      .ant-tabs-tab{
+        line-height: 26px;
+      }
+      .ant-tabs-tab-active{
+        padding-bottom: 0px;
+      }
+    }
+  }
 }

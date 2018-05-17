@@ -1,4 +1,5 @@
 export default {
+  theme: "./src/theme.js",
   "publicPath": "/static/",
   "proxy": {
     "/api": {
