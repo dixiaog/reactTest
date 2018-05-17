@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Icon, Tabs, Dropdown, Avatar } from 'antd'
+import { Menu, Icon, Tabs, Dropdown, Avatar, Button } from 'antd'
 import { connect } from 'dva'
 import router from 'umi/router'
 import styles from './PageHeader.less'
@@ -62,39 +62,41 @@ export default class PageHeader extends Component {
     this[action](targetKey)
   }
   remove = (targetKey, callBack) => {
-    console.log('targetKey', targetKey)
-    let activeKey = this.props.global.activeKey
-    const panesT = this.props.global.panes
-    const panes = this.props.global.panes.filter(pane => pane.key !== targetKey)
-    window.localStorage.setItem('panes', JSON.stringify(panes))
-    this.props.dispatch({
-      type: 'global/changeState',
-      payload: { panes },
-    })
-    const model = window.localStorage.getItem('model')
-    const index = panesT.findIndex(ele => ele.key === targetKey)
-    const url = panesT[index].key.split('/').join('')
-    this.props.dispatch({
-      type: `${url}/changeState`,
-      payload: { searchParam: JSON.parse(model)[panesT[index].key.split('/').join('')].searchParam, page: {} },
-    })
-    if (activeKey === targetKey) {
+    console.log(targetKey, 'targetKey', targetKey.split('/').join(''))
+    if(targetKey.split('/').join('')) {
+      let activeKey = this.props.global.activeKey
+      const panesT = this.props.global.panes
+      const panes = this.props.global.panes.filter(pane => pane.key !== targetKey)
+      window.localStorage.setItem('panes', JSON.stringify(panes))
       this.props.dispatch({
         type: 'global/changeState',
-        payload: {
-          current: panes[panes.length - 1].key,
-          activeKey: panes[panes.length - 1].key,
-          title: panes[panes.length - 1].title,
-        },
+        payload: { panes },
       })
-      router.push(`${panes[panes.length - 1].url}`)
-    }
-    this.setState({
-    }, () => {
-      if (callBack) {
-        callBack()
+      const model = window.localStorage.getItem('model')
+      const index = panesT.findIndex(ele => ele.key === targetKey)
+      const url = panesT[index].key.split('/').join('')
+      this.props.dispatch({
+        type: `${url}/changeState`,
+        payload: { searchParam: JSON.parse(model)[panesT[index].key.split('/').join('')].searchParam, page: {} },
+      })
+      if (activeKey === targetKey) {
+        this.props.dispatch({
+          type: 'global/changeState',
+          payload: {
+            current: panes[panes.length - 1].key,
+            activeKey: panes[panes.length - 1].key,
+            title: panes[panes.length - 1].title,
+          },
+        })
+        router.push(`${panes[panes.length - 1].url}`)
       }
-    })
+      this.setState({
+      }, () => {
+        if (callBack) {
+          callBack()
+        }
+      })
+    }
   }
   // 关闭其他全部
   closeOther = () => {
@@ -154,24 +156,25 @@ export default class PageHeader extends Component {
   }
   refresh = () => {
     const url = window.location.href.split('/')[window.location.href.split('/').length -1]
-    const url1 = `/${url}`
-    this.remove(url1, () => {
-      const { tabList, panes } = this.props.global
-      const panelArray = panes.filter(ele => ele.key === url1)
-      const tab1 = tabList.filter(ele => ele.key === url1)[0]
-      if (!panelArray.length) {
+    if (url) {
+      const url1 = `/${url}`
+      this.remove(url1, () => {
+        const { tabList, panes } = this.props.global
+        const tab1 = tabList.filter(ele => ele.key === url1)[0]
         panes.push({ key: url1, title: tab1.tab, url: tab1.url, closable: url1 === '1' ? false : true })
-      }
-      this.props.dispatch({
-        type: 'global/changeState',
-        payload: { title: tab1.tab, panes, current: url1, activeKey: url1 },
+        this.props.dispatch({
+          type: 'global/changeState',
+          payload: { title: tab1.tab, panes, current: url1, activeKey: url1 },
+        })
+        router.push(tab1.url)
       })
-      router.push(tab1.url)
-    })
+    }
+  }
+  closeThis = () => {
+    this.remove(this.props.global.activeKey)
   }
   render() {
     const { panes, TabList, current, activeKey } = this.props.global
-    console.log('panes', panes)
     const menu = (
       <Menu className={styles.dropMenu}>
         <Menu.Item>
@@ -182,7 +185,7 @@ export default class PageHeader extends Component {
     const menuPanel = (
       <Menu style={{ top: 5, left: 10 }}>
         <Menu.Item>
-          <a onClick={this.remove.bind(this, this.props.global.activeKey)}>关闭标签</a>
+          <a onClick={this.closeThis}>关闭标签</a>
         </Menu.Item>
         <Menu.Item>
           <a onClick={this.closeOther}>关闭其他全部</a>
@@ -192,6 +195,13 @@ export default class PageHeader extends Component {
         </Menu.Item>
       </Menu>
     )
+    const operations = (
+      <div >
+        <Button onClick={this.refresh} size="small" style={{ border: 0, marginRight: 5 }}><Icon type="sync" /> 刷新</Button>
+        <Dropdown overlay={menuPanel} placement="bottomRight" >
+          <Button size="small" style={{ border: 0 }}>操作<Icon type="down" /></Button>
+        </Dropdown>
+      </div>)
     return (
       <div className={styles.header}>
         <div className={styles.headerTop}>
@@ -226,18 +236,21 @@ export default class PageHeader extends Component {
               type="editable-card"
               onEdit={this.onEdit}
               hideAdd={true}
+              tabBarExtraContent={operations}
             >
+            {/* // className={styles.tabs}
+            // activeKey={tabDefaultValue.key} */}
               {panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
             </Tabs>
           </div>
-          <div className={styles.refresh} style={{ marginLeft: 10, marginRight: 10 }}>
+          {/* <div className={styles.refresh} style={{ marginLeft: 10, marginRight: 10 }}>
             <Dropdown overlay={menuPanel}>
               <a style={{ color: '#575757' }}>操作 <Icon type="down" /></a>
             </Dropdown>
           </div>
           <div className={styles.refresh} onClick={this.refresh}>
             <Icon type="reload" style={{ fontSize: 12, color: '#08c' }} />刷新
-          </div>
+          </div> */}
         </div>
       </div>
     )
