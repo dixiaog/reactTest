@@ -106,7 +106,7 @@ export default {
       }],
     }],
     title: '首页',
-    refresh: false,
+    // refresh: false,
     current: '/', // 下拉菜单当前选中
     activeKey: '/', // 激活的按钮
   },

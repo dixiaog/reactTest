@@ -14,14 +14,16 @@ export default class PageHeader extends Component {
   componentDidMount() {
     // 浏览器自带刷新,这里要重新刷新页面,本地panes删除当前url页面
     const { panes, tabList } = this.props.global
+    console.log('panes', panes, 'tabList', tabList)
     window.localStorage.setItem('panes', JSON.stringify([panes[0]]))
     window.localStorage.setItem('model', JSON.stringify(this.props.state))
     const url = window.location.href.split('/')[window.location.href.split('/').length -1]
     const index = panes.findIndex(ele => ele.key === `/${url}`)
     if (index === -1) {
       const index = tabList.findIndex(ele => ele.key === `/${url}`)
+      console.log('index', index)
       if (index === -1) {
-        router.push('/Exception')
+        router.push('/Exception/404')
       } else {
         panes.push({ key: tabList[index].key, title: tabList[index].tab, url: tabList[index].url })
         this.props.dispatch({ 
@@ -32,6 +34,7 @@ export default class PageHeader extends Component {
     }
   }
   handleClick = (e) => {
+    console.log('e', e)
     router.push(`${e.item.props.url}`)
     const { panes } = this.props.global
     const panelArray = panes.filter(ele => ele.key === e.key)
@@ -44,6 +47,7 @@ export default class PageHeader extends Component {
     })
   }
   onChange = (activeKey) => {
+    console.log('activeKey', activeKey)
     const { tabList, panes } = this.props.global
     // 把打开的页面存储到本地浏览器
     window.localStorage.setItem('panes', JSON.stringify(panes))
@@ -57,7 +61,8 @@ export default class PageHeader extends Component {
   onEdit = (targetKey, action) => {
     this[action](targetKey)
   }
-  remove = (targetKey) => {
+  remove = (targetKey, callBack) => {
+    console.log('targetKey', targetKey)
     let activeKey = this.props.global.activeKey
     const panesT = this.props.global.panes
     const panes = this.props.global.panes.filter(pane => pane.key !== targetKey)
@@ -84,6 +89,12 @@ export default class PageHeader extends Component {
       })
       router.push(`${panes[panes.length - 1].url}`)
     }
+    this.setState({
+    }, () => {
+      if (callBack) {
+        callBack()
+      }
+    })
   }
   // 关闭其他全部
   closeOther = () => {
@@ -143,15 +154,24 @@ export default class PageHeader extends Component {
   }
   refresh = () => {
     const url = window.location.href.split('/')[window.location.href.split('/').length -1]
-    if (url) {
+    const url1 = `/${url}`
+    this.remove(url1, () => {
+      const { tabList, panes } = this.props.global
+      const panelArray = panes.filter(ele => ele.key === url1)
+      const tab1 = tabList.filter(ele => ele.key === url1)[0]
+      if (!panelArray.length) {
+        panes.push({ key: url1, title: tab1.tab, url: tab1.url, closable: url1 === '1' ? false : true })
+      }
       this.props.dispatch({
         type: 'global/changeState',
-        payload: { refresh: true },
+        payload: { title: tab1.tab, panes, current: url1, activeKey: url1 },
       })
-    }
+      router.push(tab1.url)
+    })
   }
   render() {
     const { panes, TabList, current, activeKey } = this.props.global
+    console.log('panes', panes)
     const menu = (
       <Menu className={styles.dropMenu}>
         <Menu.Item>

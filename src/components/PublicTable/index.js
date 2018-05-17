@@ -62,22 +62,6 @@ export default class PublicTable extends Component {
   }
   handleReset = () => {
     this.props.form.resetFields()
-    if (this.props.global.refresh) {
-      const model = window.localStorage.getItem('model')
-      const url = window.location.href.split('/')[window.location.href.split('/').length - 1]
-      this.props.dispatch({
-        type: `${url}/fetch`,
-        payload: { searchParam: JSON.parse(model)[url].searchParam, page: {} },
-      })
-      this.props.dispatch({
-        type: `${url}/changeState`,
-        payload: { searchParam: JSON.parse(model)[url].searchParam, page: {} },
-      })
-      this.props.dispatch({
-        type: 'global/changeState',
-        payload: { refresh: false },
-      })
-    } else {
       this.props.dispatch({
         type: `${this.props.namespace}/search`,
         payload: { searchParam: {} },
@@ -86,7 +70,6 @@ export default class PublicTable extends Component {
         type: `${this.props.namespace}/changeState`,
         payload: { searchParam: {}, loading: true },
       })
-    }
   }
 
   onChange = (title) => {
@@ -106,7 +89,6 @@ export default class PublicTable extends Component {
     })
   }
   render() {
-    const { refresh } = this.props.global
     const { getFieldDecorator } = this.props.form
     const { data, rowKey, scroll, current, total, pageSize,
       actionBar, dispatch, loading, namespace, searchParam, searchBar } = this.props
@@ -172,7 +154,6 @@ export default class PublicTable extends Component {
         renderItem={item => (<List.Item><Checkbox onChange={this.onChange.bind(this, item.title)} checked={item.checked} style={{ marginRight: 10, fontSize: 10 }} />{item.title}</List.Item>)}
       />
     )
-    refresh ? this.handleReset() : null
     const formItem = (ele, index, initVal, flag) => {
       return (
         <Col {...flag} key={index}>
@@ -215,8 +196,7 @@ export default class PublicTable extends Component {
                       )
                     }
                   }
-                }
-                ) : null}
+                }) : null}
                 </Row>
             </Form>
           </span>

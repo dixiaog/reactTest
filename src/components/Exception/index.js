@@ -30,12 +30,7 @@ class BaseLayout extends React.Component {
                 createElement(linkElement, {
                   to: '/',
                   href: '/',
-                }, <Button type="primary" onClick={() => {
-                  this.props.dispatch({
-                    type: 'global/changeState',
-                    payload: { title: '首页', current: '/',  activeKey: '/' },
-                  })
-                }}>返回首页</Button>)
+                }, <Button type="primary">返回首页</Button>)
             }
           </div>
         </div>

@@ -6,8 +6,8 @@ import withRouter from 'umi/withRouter'
 import { connect } from 'dva'
 import Title from './Title'
 import Login from '../pages/Login/index'
-import Exception from '../pages/Exception/404.js'
-import Exception401 from '../pages/Exception/401.js'
+import Error404 from '../pages/Exception/404.js'
+import Error401 from '../pages/Exception/401.js'
 
 @connect(state => ({
   global: state.global,
@@ -22,12 +22,9 @@ class BaseLayout extends React.Component {
       let flag = []
       if (tabList && tabList.length) {
         flag = tabList.filter(ele => ele.url === pathname)
-        // 判断当前页面是否已经存在(打开)
         const index = panes.findIndex(ele => ele.url === pathname)
-        // 当前页面不存在(未打开)
         if (index === -1) {
           const index = tabList.findIndex(ele => ele.url === pathname)
-          // 判断当前页面是否是有效页面
           if(index !== -1) {
             panes.push({ key: tabList[index].key, title: tabList[index].tab, url: tabList[index].url })
             this.props.dispatch({ 
@@ -48,12 +45,12 @@ class BaseLayout extends React.Component {
         )
       } else {
         return (
-          <Exception />
+          <Error404 />
         )
       }
     } else {
       // return <Redirect to="/login" />
-      return <Exception401 />
+      return <Error401 />
     }
   }
 }
