@@ -65,7 +65,7 @@ export default class PublicTable extends Component {
   }
   render() {
     const { data, rowKey, scroll, current, total, pageSize,
-      actionBar, dispatch, loading, namespace, searchParam } = this.props
+      actionBar, dispatch, loading, namespace, searchParam, searchBar } = this.props
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         dispatch({
@@ -128,16 +128,19 @@ export default class PublicTable extends Component {
         renderItem={item => (<List.Item><Checkbox onChange={this.onChange.bind(this, item.title)} checked={item.checked} style={{ marginRight: 10, fontSize: 10 }} />{item.title}</List.Item>)}
       />
     )
+    const searchValues = {
+      searchBar,
+      searchParam,
+      namespace,
+      collapse: this.state.collapse,
+      dispatch,
+      changeBars: () => this.setState({ collapse: !this.state.collapse }),
+    }
     return (
       <div>
-        <SearchBars
-          searchBar={this.props.searchBar}
-          searchParam={this.props.searchParam}
-          namespace={this.props.namespace}
-          collapse={this.state.collapse}
-          actionBar={this.props.actionBar}
-          dispatch={this.props.dispatch}
-          changeBars={() => this.setState({ collapse: !this.state.collapse })}/>
+        {/* 搜索框 */}
+        <SearchBars {...searchValues}/>
+        {/* 操作框 */}
         <div className={styles.antBtn}>
           {actionBar && actionBar.length ? actionBar.map((ele, index) => 
             <span key={index} className={styles.btn}>{ele}</span>
@@ -148,6 +151,7 @@ export default class PublicTable extends Component {
             </Popover>
           </span>
         </div>
+        {/* 列表 */}
         <div className={data.length ? this.state.collapse ? styles.tableCollapse : styles.table : styles.tableNoData}>
           <Table
             columns={this.state.columns}

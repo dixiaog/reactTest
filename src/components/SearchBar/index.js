@@ -23,10 +23,9 @@ const itemFirstCol = {
 @Form.create()
 export default class SearchBar extends React.Component {
   constructor(props) {
-      super(props)
-      this.state = {
-        collapsed: false,
-      }
+    super(props)
+    this.state = {
+    }
   }
   handleSubmit = () => {
     this.props.form.validateFields((err, values) => {
@@ -53,7 +52,7 @@ export default class SearchBar extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form
-    const { searchBar, searchParam, collapse, changeBars, actionBar } = this.props
+    const { searchBar, searchParam, collapse, changeBars } = this.props
     const formItem = (ele, index, initVal, flag) => {
       return (
         <Col {...flag} key={index}>
