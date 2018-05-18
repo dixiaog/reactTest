@@ -14,14 +14,12 @@ export default class PageHeader extends Component {
   componentDidMount() {
     // 浏览器自带刷新,这里要重新刷新页面,本地panes删除当前url页面
     const { panes, tabList } = this.props.global
-    console.log('panes', panes, 'tabList', tabList)
     window.localStorage.setItem('panes', JSON.stringify([panes[0]]))
     window.localStorage.setItem('model', JSON.stringify(this.props.state))
     const url = window.location.href.split('/')[window.location.href.split('/').length -1]
     const index = panes.findIndex(ele => ele.key === `/${url}`)
     if (index === -1) {
       const index = tabList.findIndex(ele => ele.key === `/${url}`)
-      console.log('index', index)
       if (index === -1) {
         router.push('/Exception/404')
       } else {
@@ -34,7 +32,6 @@ export default class PageHeader extends Component {
     }
   }
   handleClick = (e) => {
-    console.log('e', e)
     router.push(`${e.item.props.url}`)
     const { panes } = this.props.global
     const panelArray = panes.filter(ele => ele.key === e.key)
@@ -47,7 +44,6 @@ export default class PageHeader extends Component {
     })
   }
   onChange = (activeKey) => {
-    console.log('activeKey', activeKey)
     const { tabList, panes } = this.props.global
     // 把打开的页面存储到本地浏览器
     window.localStorage.setItem('panes', JSON.stringify(panes))
@@ -62,7 +58,6 @@ export default class PageHeader extends Component {
     this[action](targetKey)
   }
   remove = (targetKey, callBack) => {
-    console.log(targetKey, 'targetKey', targetKey.split('/').join(''))
     if(targetKey.split('/').join('')) {
       let activeKey = this.props.global.activeKey
       const panesT = this.props.global.panes

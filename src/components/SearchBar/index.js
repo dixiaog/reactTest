@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'dva'
-import update from 'immutability-helper'
-import { Table, Row, Col, Form, Button, Popover, Checkbox, List, Icon } from 'antd'
+import React from 'react' //, { Component }
+// import { connect } from 'dva'
+// import update from 'immutability-helper'
+import { Row, Col, Form, Button, Icon } from 'antd'
 import styles from './index.less'
 
 const FormItem = Form.Item
