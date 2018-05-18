@@ -3,6 +3,7 @@ import { Menu, Icon, Tabs, Dropdown, Avatar, Button, Tooltip } from 'antd'
 import { connect } from 'dva'
 import router from 'umi/router'
 import styles from './PageHeader.less'
+import ModifyPwd from './ModifyPwd'
 
 const SubMenu = Menu.SubMenu
 const TabPane = Tabs.TabPane
@@ -11,6 +12,12 @@ const TabPane = Tabs.TabPane
   state: state,
 }))
 export default class PageHeader extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      show: false,
+    }
+  }
   componentDidMount() {
     // 浏览器自带刷新,这里要重新刷新页面,本地panes删除当前url页面
     const { panes, tabList } = this.props.global
@@ -168,6 +175,14 @@ export default class PageHeader extends Component {
   closeThis = () => {
     this.remove(this.props.global.activeKey)
   }
+  hideModal = () => {
+    this.setState({
+      show: false,
+    })
+  }
+  onSure = (values) => {
+    console.log('用户密码', values)
+  }
   render() {
     const { panes, TabList, current, activeKey } = this.props.global
     const companyName =  window.localStorage.getItem('companyName')
@@ -218,15 +233,21 @@ export default class PageHeader extends Component {
             )}
             </Menu>
           </div>
-          <div className={styles.right}>
-            <span>
+          {/* <div className={styles.right}>
+            <span> */}
               {/* <Avatar style={{ marginLeft: 10 }} size="small" icon="home" /> */}
-              <span style={{ marginLeft: 5, color: '#108EE9' }}>公司:</span>
+              {/* <span style={{ marginLeft: 5, color: '#108EE9' }}>公司:</span>
               {companyName && companyName.length > 4 ?
                 <Tooltip placement="topRight" style={{ marginLeft: 6 }} title={companyName}>{companyName.substr(0,3)}......</Tooltip>
                 :
                 <span style={{ marginLeft: 6 }}>{companyName}</span>}
             </span>
+          </div> */}
+          <div className={styles.right}>
+            <a onClick={this.logout}>退出</a>
+          </div>
+          <div className={styles.right}>
+            <a onClick={() => this.setState({ show: true })}>修改密码</a>
           </div>
           <div className={styles.right}>
             {/* <Dropdown overlay={menu}> */}
@@ -236,9 +257,6 @@ export default class PageHeader extends Component {
               <span style={{ marginLeft: 6 }}>{window.localStorage.getItem('userName')}</span>
             </span>
             {/* </Dropdown> */}
-          </div>
-          <div className={styles.right} style={{ marginLeft: -10 }}>
-            <a onClick={this.logout}>退出</a>
           </div>
         </div>
         <div className={styles.pane}>
@@ -266,6 +284,7 @@ export default class PageHeader extends Component {
             <Icon type="reload" style={{ fontSize: 12, color: '#08c' }} />刷新
           </div> */}
         </div>
+        {this.state.show ? <ModifyPwd show={this.state.show} hideModal={this.hideModal} onSure={this.onSure} /> : null}
       </div>
     )
   }
