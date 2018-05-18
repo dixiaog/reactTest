@@ -4,6 +4,7 @@ import PublicTable from '../../../components/PublicTable'
 import { Tag, Input, Popconfirm, Button, Divider } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import ShopModal from './ShopModal'
+import styles from '../base.less'
 
 @connect(state => ({
   shop: state.shop,
@@ -119,7 +120,9 @@ export default class Shop extends Component {
     }
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         <ShopModal show={this.state.shop} hideModal={() => this.setState({ shop: false, record: {} })} record={this.state.record} />
       </div>
     )

@@ -2,7 +2,7 @@
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 13:53:58
+ * @Last Modified time: 2018-05-18 15:36:46
  * 菜单管理
  */
 
@@ -10,6 +10,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
 import { isRefresh } from '../../../utils/utils'
+import styles from '../sys.less'
 
 @connect(state => ({
   menu: state.menu,
@@ -94,7 +95,7 @@ export default class Task extends Component {
     }
 
     return (
-      <div>
+      <div className={styles.tableList}>
         <PublicTable {...tableProps} />
       </div>
     )

@@ -4,6 +4,7 @@ import PublicTable from '../../../components/PublicTable'
 import { Tag, Button, Input } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import Role from './Role'
+import styles from '../base.less'
 
 @connect(state => ({
   user: state.user,
@@ -116,7 +117,9 @@ export default class User extends Component {
     }
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         <Role show={this.state.role} hideModal={() => this.setState({ role: false })} />
       </div>
     )

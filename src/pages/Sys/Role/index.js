@@ -2,7 +2,7 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 09:25:23
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 13:54:14
+ * @Last Modified time: 2018-05-18 15:31:14
  * 角色列表
  */
 import React, { Component } from 'react'
@@ -12,6 +12,7 @@ import { Button, Input, Divider } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import AddRoles from './AddRoles'
 import DistributePower from './DistributePower'
+import styles from '../sys.less'
 
 @connect(state => ({
   role: state.role,
@@ -124,7 +125,9 @@ export default class Role extends Component {
     }
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         {this.state.roleVisible ? <AddRoles roleVisible={this.state.roleVisible} record={this.state.record} hideModal={() => this.setState({ roleVisible: false, record: null })} /> : null}
         {this.state.powerVisible ? <DistributePower powerVisible={this.state.powerVisible} record={this.state.record} hideModal={() => this.setState({ powerVisible: false, record: null })} /> : null}
       </div>

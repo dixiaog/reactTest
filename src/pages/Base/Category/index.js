@@ -3,6 +3,7 @@ import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
 import { Tag, Input, Select } from 'antd'
 import { isRefresh } from '../../../utils/utils'
+import styles from '../base.less'
 
 const Option = Select.Option
 @connect(state => ({
@@ -213,7 +214,7 @@ export default class Category extends Component {
       scroll: { x: 1800 },
     }
     return (
-      <div>
+      <div className={styles.tableList}>
         <PublicTable {...tableProps} />
       </div>
     )

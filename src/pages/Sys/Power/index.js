@@ -2,7 +2,7 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 13:53:48
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 13:54:06
+ * @Last Modified time: 2018-05-18 15:36:04
  * 权限管理
  */
 import React, { Component } from 'react'
@@ -12,6 +12,7 @@ import { Button, Input, Divider, notification } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import PowerModal from './PowerModal'
 import { deletePower } from '../../../services/system'
+import styles from '../sys.less'
 // import DistributePower from './DistributePower'
 
 @connect(state => ({
@@ -144,7 +145,9 @@ export default class Power extends Component {
     }
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         {this.state.powerVisible ? <PowerModal powerVisible={this.state.powerVisible} record={this.state.record} hideModal={() => this.setState({ powerVisible: false, record: null })} /> : null}
       </div>
     )

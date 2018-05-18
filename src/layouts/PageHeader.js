@@ -184,7 +184,7 @@ export default class PageHeader extends Component {
     const menuPanel = (
       <Menu style={{ top: 5, left: 10 }}>
         <Menu.Item>
-          <a onClick={this.closeThis}>关闭标签</a>
+          <a onClick={this.closeThis}>关闭当前标签</a>
         </Menu.Item>
         <Menu.Item>
           <a onClick={this.closeOther}>关闭其他全部</a>
@@ -221,7 +221,7 @@ export default class PageHeader extends Component {
           <div className={styles.right}>
             <span>
               {/* <Avatar style={{ marginLeft: 10 }} size="small" icon="home" /> */}
-              <span style={{ marginLeft: 5 }}>公司：</span>
+              <span style={{ marginLeft: 5, color: '#108EE9' }}>公司:</span>
               {companyName && companyName.length > 4 ?
                 <Tooltip placement="topRight" style={{ marginLeft: 6 }} title={companyName}>{companyName.substr(0,3)}......</Tooltip>
                 :
@@ -232,7 +232,7 @@ export default class PageHeader extends Component {
             {/* <Dropdown overlay={menu}> */}
             <span>
               {/* <Avatar size="small" icon="user" /> */}
-              <span>用户名：</span>
+              <span style={{ color: '#108EE9' }}>用户:</span>
               <span style={{ marginLeft: 6 }}>{window.localStorage.getItem('userName')}</span>
             </span>
             {/* </Dropdown> */}

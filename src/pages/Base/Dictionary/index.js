@@ -2,7 +2,7 @@
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 13:53:28
+ * @Last Modified time: 2018-05-18 15:38:25
  * 数据字典
  */
 
@@ -12,6 +12,7 @@ import { Button, Input } from 'antd'
 import PublicTable from '../../../components/PublicTable'
 import { isRefresh } from '../../../utils/utils'
 import DicModal from './DicModal'
+import styles from '../base.less'
 
 @connect(state => ({
     dictionary: state.dictionary,
@@ -96,7 +97,9 @@ export default class Dictionary extends Component {
 
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         <DicModal show={this.state.show} record={this.state.record} hideModal={() => this.setState({ show: false, record: {} })} />
       </div>
     )

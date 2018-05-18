@@ -4,6 +4,7 @@ import PublicTable from '../../../components/PublicTable'
 import { Button, Input } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import SoftModal from './SoftModal'
+import styles from '../base.less'
 
 @connect(state => ({
   software: state.software,
@@ -93,7 +94,9 @@ export default class Software extends Component {
     }
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         <SoftModal show={this.state.software} hideModal={() => this.setState({ software: false })} />
       </div>
     )

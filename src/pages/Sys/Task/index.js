@@ -2,7 +2,7 @@
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 13:54:24
+ * @Last Modified time: 2018-05-18 15:36:24
  * 任务管理
  */
 
@@ -12,6 +12,7 @@ import { Button, Input, Tag } from 'antd'
 import PublicTable from '../../../components/PublicTable'
 import { isRefresh } from '../../../utils/utils'
 import TaskModal from './TaskModal'
+import styles from '../sys.less'
 
 @connect(state => ({
   task: state.task,
@@ -126,7 +127,9 @@ export default class Task extends Component {
 
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         <TaskModal show={this.state.task} record={this.state.record} hideModal={() => this.setState({ task: false, record: {} })} />
       </div>
     )
