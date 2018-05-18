@@ -34,18 +34,6 @@ export default class PublicTable extends Component {
       listColumns: newArray,
     })
   }
-  handleSubmit = () => {
-    this.props.form.validateFields((err, values) => {
-      this.props.dispatch({
-        type: `${this.props.namespace}/search`,
-        payload: { searchParam: values },
-      })
-      this.props.dispatch({
-        type: `${this.props.namespace}/changeState`,
-        payload: { searchParam: values, loading: true },
-      })
-    })
-  }
 
   onChange = (title) => {
     const listColumns = this.state.listColumns
