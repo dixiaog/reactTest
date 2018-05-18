@@ -183,19 +183,21 @@ export default class PageHeader extends Component {
   onSure = (values) => {
     console.log('用户密码', values)
   }
+  onUserClick = ({ key }) => {
+    if (key === 'myCompany') {
+      alert('这是公司')
+    }
+  }
   render() {
     const { panes, TabList, current, activeKey } = this.props.global
     const companyName =  window.localStorage.getItem('companyName')
-    // const menu = (
-    //   <Menu className={styles.dropMenu}>
-    //     {/* <Menu.Item>
-    //       <a>{window.localStorage.getItem('companyName')}</a>
-    //     </Menu.Item> */}
-    //     <Menu.Item>
-    //       <a onClick={this.logout}>退出登录</a>
-    //     </Menu.Item>
-    //   </Menu>
-    // )
+    const menu = (
+      <Menu className={styles.dropMenu} onClick={this.onUserClick}>
+        <Menu.Item key='myCompany'><Icon type="home" />
+          {companyName}
+        </Menu.Item>
+      </Menu>
+    )
     const menuPanel = (
       <Menu style={{ top: 5, left: 10 }}>
         <Menu.Item>
@@ -250,13 +252,13 @@ export default class PageHeader extends Component {
             <a onClick={() => this.setState({ show: true })}>修改密码</a>
           </div>
           <div className={styles.right}>
-            {/* <Dropdown overlay={menu}> */}
-            <span>
-              {/* <Avatar size="small" icon="user" /> */}
-              <span style={{ color: '#108EE9' }}>用户:</span>
-              <span style={{ marginLeft: 6 }}>{window.localStorage.getItem('userName')}</span>
-            </span>
-            {/* </Dropdown> */}
+            <Dropdown overlay={menu}>
+              <span>
+                {/* <Avatar size="small" icon="user" /> */}
+                <span style={{ color: '#108EE9' }}>用户:</span>
+                <span style={{ marginLeft: 6 }}>{window.localStorage.getItem('userName')}</span>
+              </span>
+            </Dropdown>
           </div>
         </div>
         <div className={styles.pane}>
