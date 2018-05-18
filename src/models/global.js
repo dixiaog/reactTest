@@ -22,10 +22,6 @@ export default {
       tab: '数据字典',
       url: '/base/dictionary',
     }, {
-      key: '/wechat',
-      tab: '微信用户',
-      url: '/base/wechat',
-    }, {
       key: '/shop',
       tab: '店铺管理',
       url: '/base/shop',
@@ -68,10 +64,6 @@ export default {
         key: '/dictionary',
         tab: '数据字典',
         url: '/base/dictionary',
-      }, {
-        key: '/wechat',
-        tab: '微信用户',
-        url: '/base/wechat',
       }, {
         key: '/shop',
         tab: '店铺管理',

@@ -2,7 +2,7 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 10:53:38
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-16 13:29:40
+ * @Last Modified time: 2018-05-18 08:53:05
  * 分配资源
  */
 import React, { Component } from 'react'
@@ -16,6 +16,7 @@ const CheckboxGroup = Checkbox.Group
 
 @connect(state => ({
   role: state.role,
+  global: state.global,
 }))
 // @Form.create()
 export default class AddRoles extends Component {

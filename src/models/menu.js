@@ -21,8 +21,6 @@ export default {
             }, {
               sortIndex: '3', text: "数据字典", href: "/dicConfig/dicList", iconFont: "f-icon-book"
             }, {
-              sortIndex: '4', text: "微信用户", href: "/wechat/user/list", iconFont: "f-icon-users"
-            }, {
               sortIndex: '5', text: "店铺管理", href: "/app/shop/shopList", iconFont: "f-icon-shopping-cart"
             }, {
               sortIndex: '6', text: "商品类目", href: "/app/item/itemList", iconFont: "f-icon-cubes"
