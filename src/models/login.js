@@ -19,6 +19,7 @@ export default {
         })
         window.localStorage.setItem('userName', response.userName)
         window.localStorage.setItem('token', response.token)
+        window.localStorage.setItem('companyName', response.companyName)
         window.localStorage.setItem('panes', JSON.stringify([{
           key: '1',
           title: '首页', 

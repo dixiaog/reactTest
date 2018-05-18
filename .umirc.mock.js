@@ -34,7 +34,7 @@ const proxy = {
   },
 
   // 库存--采购管理
-  'POST /umi/login': { userName: '测试111', token: '111' },
+  'POST /umi/login': { userName: '测试111', token: '111', companyName: '测试公司' },
 
   // 基础-获取用户
   'POST /base/user/getUserList': getUserList,

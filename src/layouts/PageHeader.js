@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Icon, Tabs, Dropdown, Avatar, Button } from 'antd'
+import { Menu, Icon, Tabs, Dropdown, Avatar, Button, Tooltip } from 'antd'
 import { connect } from 'dva'
 import router from 'umi/router'
 import styles from './PageHeader.less'
@@ -170,8 +170,12 @@ export default class PageHeader extends Component {
   }
   render() {
     const { panes, TabList, current, activeKey } = this.props.global
+    const companyName =  window.localStorage.getItem('companyName')
     const menu = (
       <Menu className={styles.dropMenu}>
+        {/* <Menu.Item>
+          <a>{window.localStorage.getItem('companyName')}</a>
+        </Menu.Item> */}
         <Menu.Item>
           <a onClick={this.logout}>退出登录</a>
         </Menu.Item>
@@ -215,10 +219,19 @@ export default class PageHeader extends Component {
             </Menu>
           </div>
           <div className={styles.right}>
+            <span>
+              <Avatar style={{ marginLeft: 15 }} size="small" icon="home" />
+              {companyName && companyName.length > 4 ?
+                <Tooltip placement="topRight" style={{ marginLeft: 6 }} title={companyName}>{companyName.substr(0,3)}......</Tooltip>
+                :
+                <span style={{ marginLeft: 6 }}>{companyName}</span>}
+            </span>
+          </div>
+          <div className={styles.right}>
             <Dropdown overlay={menu}>
               <span>
                 <Avatar size="small" icon="user" />
-                <span style={{ fontSize: 12, marginLeft: 10 }}>{window.localStorage.getItem('userName')}</span>
+                <span style={{ marginLeft: 6 }}>{window.localStorage.getItem('userName')}</span>
               </span>
             </Dropdown>
           </div>
