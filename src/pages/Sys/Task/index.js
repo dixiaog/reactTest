@@ -1,8 +1,8 @@
 /*
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
- * @Last Modified by: jiangteng
- * @Last Modified time: 2018-05-16 15:19:26
+ * @Last Modified by: tanmengjia
+ * @Last Modified time: 2018-05-18 13:54:24
  * 任务管理
  */
 
@@ -10,7 +10,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Button, Input, Tag } from 'antd'
 import PublicTable from '../../../components/PublicTable'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 import TaskModal from './TaskModal'
 
 @connect(state => ({
@@ -26,7 +26,7 @@ export default class Task extends Component {
   }
 
   componentDidMount() {
-    if (shouldUpdate()) {
+    if (isRefresh()) {
       this.props.dispatch({ type: 'task/fetch' })
     }
   }

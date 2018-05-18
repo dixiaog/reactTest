@@ -1,6 +1,6 @@
 import mockjs from 'mockjs'
 
-/* 江腾测试数据  */
+// 测试数据
 import { getUserList } from './mock/base/user/getUserList'
 import { getDictionaryList } from './mock/base/dictionary/getDictionaryList'
 import { getWechatList } from './mock/base/wechat/getWechatList'
@@ -8,13 +8,8 @@ import { getShopList } from './mock/base/shop/getShopList'
 import { getCategorytList } from './mock/base/category/getCategorytList'
 import { getSoftwareList } from './mock/base/software/getSoftwareList'
 import { getTaskList } from './mock/system/task/getTaskList'
-
-/* 江腾测试数据  */
-
-/* 谭梦佳测试数据  */
 import { getRoleList } from './mock/system/roleList/getRoleList'
 import { getPowerList } from './mock/system/power/getPowerList'
-/* 谭梦佳测试数据  */
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true'
@@ -39,7 +34,7 @@ const proxy = {
   },
 
   // 库存--采购管理
-  'POST /umi/login': { userName: '江腾', token: '111' },
+  'POST /umi/login': { userName: '测试111', token: '111' },
 
   // 基础-获取用户
   'POST /base/user/getUserList': getUserList,

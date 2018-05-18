@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
 import { Tag, Input, Popconfirm, Button, Divider } from 'antd'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 import ShopModal from './ShopModal'
 
 @connect(state => ({
@@ -17,7 +17,7 @@ export default class Shop extends Component {
     }
   }
   componentDidMount() {
-    if (shouldUpdate()) {
+    if (isRefresh()) {
       this.props.dispatch({ type: 'shop/fetch' })
     }
   }

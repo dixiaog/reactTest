@@ -2,14 +2,14 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 13:53:48
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-17 16:13:06
+ * @Last Modified time: 2018-05-18 13:54:06
  * 权限管理
  */
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
 import { Button, Input, Divider, notification } from 'antd'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 import PowerModal from './PowerModal'
 import { deletePower } from '../../../services/system'
 // import DistributePower from './DistributePower'
@@ -26,7 +26,7 @@ export default class Power extends Component {
     }
   }
   componentDidMount() {
-    if (shouldUpdate()) {
+    if (isRefresh()) {
       this.props.dispatch({ type: 'power/fetch' })
     }
   }

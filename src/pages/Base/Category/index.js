@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
 import { Tag, Input, Select } from 'antd'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 
 const Option = Select.Option
 @connect(state => ({
@@ -17,7 +17,7 @@ export default class Category extends Component {
     }
   }
   componentDidMount() {
-    if (shouldUpdate()) {
+    if (isRefresh()) {
       this.props.dispatch({ type: 'category/fetch' })
     }
   }

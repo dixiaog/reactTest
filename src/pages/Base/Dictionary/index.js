@@ -1,8 +1,8 @@
 /*
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
- * @Last Modified by: jiangteng
- * @Last Modified time: 2018-05-15 14:12:04
+ * @Last Modified by: tanmengjia
+ * @Last Modified time: 2018-05-18 13:53:28
  * 数据字典
  */
 
@@ -10,7 +10,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Button, Input } from 'antd'
 import PublicTable from '../../../components/PublicTable'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 import DicModal from './DicModal'
 
 @connect(state => ({
@@ -26,7 +26,7 @@ export default class Dictionary extends Component {
   }
 
   componentDidMount() {
-    if (shouldUpdate()) {
+    if (isRefresh()) {
       this.props.dispatch({ type: 'dictionary/fetch' })
     }
   }

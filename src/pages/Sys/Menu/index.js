@@ -1,15 +1,15 @@
 /*
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
- * @Last Modified by: jiangteng
- * @Last Modified time: 2018-05-16 16:19:45
+ * @Last Modified by: tanmengjia
+ * @Last Modified time: 2018-05-18 13:53:58
  * 菜单管理
  */
 
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 
 @connect(state => ({
   menu: state.menu,
@@ -24,7 +24,7 @@ export default class Task extends Component {
   }
 
   componentDidMount() {
-    if (shouldUpdate()) {
+    if (isRefresh()) {
       this.props.dispatch({ type: 'menu/fetch' })
     }
   }

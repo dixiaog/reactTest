@@ -2,14 +2,14 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 09:25:23
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 13:36:27
+ * @Last Modified time: 2018-05-18 13:54:14
  * 角色列表
  */
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
 import { Button, Input, Divider } from 'antd'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 import AddRoles from './AddRoles'
 import DistributePower from './DistributePower'
 
@@ -26,7 +26,7 @@ export default class Role extends Component {
     }
   }
   componentDidMount() {
-    if (shouldUpdate()) {
+    if (isRefresh()) {
       this.props.dispatch({ type: 'role/fetch' })
     }
   }
