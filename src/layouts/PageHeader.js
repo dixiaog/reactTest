@@ -171,16 +171,16 @@ export default class PageHeader extends Component {
   render() {
     const { panes, TabList, current, activeKey } = this.props.global
     const companyName =  window.localStorage.getItem('companyName')
-    const menu = (
-      <Menu className={styles.dropMenu}>
-        {/* <Menu.Item>
-          <a>{window.localStorage.getItem('companyName')}</a>
-        </Menu.Item> */}
-        <Menu.Item>
-          <a onClick={this.logout}>退出登录</a>
-        </Menu.Item>
-      </Menu>
-    )
+    // const menu = (
+    //   <Menu className={styles.dropMenu}>
+    //     {/* <Menu.Item>
+    //       <a>{window.localStorage.getItem('companyName')}</a>
+    //     </Menu.Item> */}
+    //     <Menu.Item>
+    //       <a onClick={this.logout}>退出登录</a>
+    //     </Menu.Item>
+    //   </Menu>
+    // )
     const menuPanel = (
       <Menu style={{ top: 5, left: 10 }}>
         <Menu.Item>
@@ -220,7 +220,8 @@ export default class PageHeader extends Component {
           </div>
           <div className={styles.right}>
             <span>
-              <Avatar style={{ marginLeft: 15 }} size="small" icon="home" />
+              {/* <Avatar style={{ marginLeft: 10 }} size="small" icon="home" /> */}
+              <span style={{ marginLeft: 5 }}>公司：</span>
               {companyName && companyName.length > 4 ?
                 <Tooltip placement="topRight" style={{ marginLeft: 6 }} title={companyName}>{companyName.substr(0,3)}......</Tooltip>
                 :
@@ -228,12 +229,16 @@ export default class PageHeader extends Component {
             </span>
           </div>
           <div className={styles.right}>
-            <Dropdown overlay={menu}>
-              <span>
-                <Avatar size="small" icon="user" />
-                <span style={{ marginLeft: 6 }}>{window.localStorage.getItem('userName')}</span>
-              </span>
-            </Dropdown>
+            {/* <Dropdown overlay={menu}> */}
+            <span>
+              {/* <Avatar size="small" icon="user" /> */}
+              <span>用户名：</span>
+              <span style={{ marginLeft: 6 }}>{window.localStorage.getItem('userName')}</span>
+            </span>
+            {/* </Dropdown> */}
+          </div>
+          <div className={styles.right} style={{ marginLeft: -10 }}>
+            <a onClick={this.logout}>退出</a>
           </div>
         </div>
         <div className={styles.pane}>
