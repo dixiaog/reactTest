@@ -146,7 +146,7 @@ export default class PublicTable extends Component {
             dataSource={data}
             rowKey={record => record[rowKey]}
             size="small"
-            scroll={ scroll ? Object.assign(scroll, { y: document.body.clientHeight - 240 }) : Object.assign({}, { y: document.body.clientHeight - 240 })}
+            scroll={ scroll && scroll.y ? scroll : (scroll ? Object.assign(scroll, { y: document.body.clientHeight - 240 }) : { y: document.body.clientHeight - 240 })}
             rowSelection={rowSelection}
             pagination={pagination}
             loading={loading}

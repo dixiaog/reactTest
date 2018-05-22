@@ -15,21 +15,21 @@ import Error401 from '../pages/Exception/401.js'
 class BaseLayout extends React.Component {
   render () {
     const { pathname } = this.props.location
-    const { tabList, panes } = this.props.global
+    const { menu, tabList } = this.props.global
     if (pathname === '/login') {
       return <Login />
     } else if (window.localStorage.getItem('token')) {
       let flag = []
-      if (tabList && tabList.length) {
-        flag = tabList.filter(ele => ele.url === pathname)
-        const index = panes.findIndex(ele => ele.url === pathname)
+      if (menu && menu.length) {
+        flag = menu.filter(ele => ele.url === pathname)
+        const index = tabList.findIndex(ele => ele.url === pathname)
         if (index === -1) {
-          const index = tabList.findIndex(ele => ele.url === pathname)
+          const index = menu.findIndex(ele => ele.url === pathname)
           if(index !== -1) {
-            panes.push({ key: tabList[index].key, title: tabList[index].tab, url: tabList[index].url })
+            tabList.push({ key: menu[index].key, title: menu[index].tab, url: menu[index].url })
             this.props.dispatch({ 
               type: 'global/changeState',
-              payload: { panes, current: tabList[index].key, activeKey: tabList[index].key, title: tabList[index].tab },
+              payload: { tabList, current: menu[index].key, activeKey: menu[index].key, title: menu[index].tab },
             })
           }
         }

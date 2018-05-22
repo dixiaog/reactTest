@@ -28,9 +28,9 @@ export default class AddRoles extends Component {
     }
   }
   componentWillMount() {
-    const { tabList } = this.props.global
+    const { menu } = this.props.global
     this.setState({
-      names: tabList,
+      names: menu,
     })
     if (this.props.record) {
       getChoosePowers(this.props.record.autoNo).then((json) => {

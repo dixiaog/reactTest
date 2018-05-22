@@ -3,13 +3,13 @@ export default {
   namespace: 'global',
 
   state: {
-    panes: [{
+    tabList: [{
       key: '/',
       title: '首页', 
       url: '/',
       closable: false,
     }], // 记录选取的菜单
-    tabList: [{ // 存放所有一级菜单
+    menu: [{ // 存放所有一级菜单
       key: '/',
       tab: '首页',
       url: '/',

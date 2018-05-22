@@ -20,46 +20,46 @@ export default class PageHeader extends Component {
   }
   componentDidMount() {
     // 浏览器自带刷新,这里要重新刷新页面,本地panes删除当前url页面
-    const { panes, tabList } = this.props.global
-    window.localStorage.setItem('panes', JSON.stringify([panes[0]]))
+    const { tabList, menu } = this.props.global
+    window.localStorage.setItem('tabList', JSON.stringify([tabList[0]]))
     window.localStorage.setItem('model', JSON.stringify(this.props.state))
     const url = window.location.href.split('/')[window.location.href.split('/').length -1]
-    const index = panes.findIndex(ele => ele.key === `/${url}`)
+    const index = tabList.findIndex(ele => ele.key === `/${url}`)
     if (index === -1) {
-      const index = tabList.findIndex(ele => ele.key === `/${url}`)
+      const index = menu.findIndex(ele => ele.key === `/${url}`)
       if (index === -1) {
         router.push('/Exception/404')
       } else {
-        panes.push({ key: tabList[index].key, title: tabList[index].tab, url: tabList[index].url })
+        tabList.push({ key: menu[index].key, title: menu[index].tab, url: menu[index].url })
         this.props.dispatch({ 
           type: 'global/changeState',
-          payload: { panes, current: tabList[index].key, activeKey: tabList[index].key, title: tabList[index].tab },
+          payload: { tabList, current: menu[index].key, activeKey: menu[index].key, title: menu[index].tab },
         })
       }
     }
   }
   handleClick = (e) => {
     router.push(`${e.item.props.url}`)
-    const { panes } = this.props.global
-    const panelArray = panes.filter(ele => ele.key === e.key)
+    const { tabList } = this.props.global
+    const panelArray = tabList.filter(ele => ele.key === e.key)
     if (!panelArray.length) {
-      panes.push({ key: e.key, title: e.item.props.children, url: e.item.props.url, closable: e.key === '1' ? false : true })
+      tabList.push({ key: e.key, title: e.item.props.children, url: e.item.props.url, closable: e.key === '1' ? false : true })
     }
     this.props.dispatch({
       type: 'global/changeState',
-      payload: { title: e.item.props.children, panes, current: e.key, activeKey: e.key },
+      payload: { title: e.item.props.children, tabList, current: e.key, activeKey: e.key },
     })
   }
   onChange = (activeKey) => {
-    const { tabList, panes } = this.props.global
+    const { menu, tabList } = this.props.global
     // 把打开的页面存储到本地浏览器
-    window.localStorage.setItem('panes', JSON.stringify(panes))
-    const index = tabList.findIndex(ele => ele.key === activeKey)
+    window.localStorage.setItem('tabList', JSON.stringify(tabList))
+    const index = menu.findIndex(ele => ele.key === activeKey)
     this.props.dispatch({
       type: 'global/changeState',
-      payload: { title: tabList[index].tab, activeKey, current: activeKey },
+      payload: { title: menu[index].tab, activeKey, current: activeKey },
     })
-    router.push(tabList[index].url)
+    router.push(menu[index].url)
   }
   onEdit = (targetKey, action) => {
     this[action](targetKey)
@@ -67,12 +67,12 @@ export default class PageHeader extends Component {
   remove = (targetKey, callBack) => {
     if(targetKey.split('/').join('')) {
       let activeKey = this.props.global.activeKey
-      const panesT = this.props.global.panes
-      const panes = this.props.global.panes.filter(pane => pane.key !== targetKey)
-      window.localStorage.setItem('panes', JSON.stringify(panes))
+      const panesT = this.props.global.tabList
+      const tabList = this.props.global.tabList.filter(tabs => tabs.key !== targetKey)
+      window.localStorage.setItem('tabList', JSON.stringify(tabList))
       this.props.dispatch({
         type: 'global/changeState',
-        payload: { panes },
+        payload: { tabList },
       })
       const model = window.localStorage.getItem('model')
       const index = panesT.findIndex(ele => ele.key === targetKey)
@@ -85,12 +85,12 @@ export default class PageHeader extends Component {
         this.props.dispatch({
           type: 'global/changeState',
           payload: {
-            current: panes[panes.length - 1].key,
-            activeKey: panes[panes.length - 1].key,
-            title: panes[panes.length - 1].title,
+            current: tabList[tabList.length - 1].key,
+            activeKey: tabList[tabList.length - 1].key,
+            title: tabList[tabList.length - 1].title,
           },
         })
-        router.push(`${panes[panes.length - 1].url}`)
+        router.push(`${tabList[tabList.length - 1].url}`)
       }
       this.setState({
       }, () => {
@@ -102,25 +102,25 @@ export default class PageHeader extends Component {
   }
   // 关闭其他全部
   closeOther = () => {
-    const panes = []
+    const tabList = []
     const activeKey = this.props.global.activeKey
-    this.props.global.panes.forEach(ele => {
+    this.props.global.tabList.forEach(ele => {
       if (!ele.closable || ele.key === activeKey) {
-        panes.push(ele)
+        tabList.push(ele)
       }
     })
     this.props.dispatch({
       type: 'global/changeState',
-      payload: { panes },
+      payload: { tabList },
     })
-    window.localStorage.setItem('panes', JSON.stringify(panes))
+    window.localStorage.setItem('tabList', JSON.stringify(tabList))
   }
   // 关闭全部标签
   closeAll = () => {
     this.props.dispatch({
       type: 'global/changeState',
       payload: {
-        panes: [{
+        tabList: [{
           key: '/',
           title: '首页', 
           url: '/',
@@ -130,7 +130,7 @@ export default class PageHeader extends Component {
         current: '/',
       },
     })
-    window.localStorage.setItem('panes', JSON.stringify([{
+    window.localStorage.setItem('tabList', JSON.stringify([{
       key: '1',
       title: '首页', 
       url: '/',
@@ -142,7 +142,7 @@ export default class PageHeader extends Component {
     this.props.dispatch({
       type: 'global/changeState',
       payload: {
-        panes: [{
+        tabList: [{
           key: '1',
           title: '首页', 
           url: '/',
@@ -161,12 +161,12 @@ export default class PageHeader extends Component {
     if (url) {
       const url1 = `/${url}`
       this.remove(url1, () => {
-        const { tabList, panes } = this.props.global
-        const tab1 = tabList.filter(ele => ele.key === url1)[0]
-        panes.push({ key: url1, title: tab1.tab, url: tab1.url, closable: url1 === '1' ? false : true })
+        const { menu, tabList } = this.props.global
+        const tab1 = menu.filter(ele => ele.key === url1)[0]
+        tabList.push({ key: url1, title: tab1.tab, url: tab1.url, closable: url1 === '1' ? false : true })
         this.props.dispatch({
           type: 'global/changeState',
-          payload: { title: tab1.tab, panes, current: url1, activeKey: url1 },
+          payload: { title: tab1.tab, tabList, current: url1, activeKey: url1 },
         })
         router.push(tab1.url)
       })
@@ -189,7 +189,7 @@ export default class PageHeader extends Component {
     }
   }
   render() {
-    const { panes, TabList, current, activeKey } = this.props.global
+    const { tabList, TabList, current, activeKey } = this.props.global
     const companyName =  window.localStorage.getItem('companyName')
     const menu = (
       <Menu className={styles.dropMenu} onClick={this.onUserClick}>
@@ -261,7 +261,7 @@ export default class PageHeader extends Component {
             </Dropdown>
           </div>
         </div>
-        <div className={styles.pane}>
+        <div className={styles.tabs}>
           <div className={styles.paneRight}>
             <Tabs
               onChange={this.onChange}
@@ -274,7 +274,7 @@ export default class PageHeader extends Component {
             >
             {/* // 
             // activeKey={tabDefaultValue.key} */}
-              {panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
+              {tabList.map(tabs => <TabPane tab={tabs.title} key={tabs.key} closable={tabs.closable}>{tabs.content}</TabPane>)}
             </Tabs>
           </div>
           {/* <div className={styles.refresh} style={{ marginLeft: 10, marginRight: 10 }}>
