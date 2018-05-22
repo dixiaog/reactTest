@@ -51,6 +51,7 @@ export default class PageHeader extends Component {
     })
   }
   onChange = (activeKey) => {
+    console.log('activeKey', activeKey)
     const { menu, tabList } = this.props.global
     // 把打开的页面存储到本地浏览器
     window.localStorage.setItem('tabList', JSON.stringify(tabList))
@@ -62,6 +63,7 @@ export default class PageHeader extends Component {
     router.push(menu[index].url)
   }
   onEdit = (targetKey, action) => {
+    console.log('targetKey', targetKey, 'action', action)
     this[action](targetKey)
   }
   remove = (targetKey, callBack) => {
