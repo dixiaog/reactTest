@@ -2,7 +2,7 @@
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 15:38:25
+ * @Last Modified time: 2018-05-22 13:35:04
  * 数据字典
  */
 
@@ -28,7 +28,7 @@ export default class Dictionary extends Component {
 
   componentDidMount() {
     if (isRefresh()) {
-      this.props.dispatch({ type: 'dictionary/fetch' })
+      this.props.dispatch({ type: 'dictionary/search' })
     }
   }
 

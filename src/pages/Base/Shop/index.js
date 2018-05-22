@@ -19,7 +19,7 @@ export default class Shop extends Component {
   }
   componentDidMount() {
     if (isRefresh()) {
-      this.props.dispatch({ type: 'shop/fetch' })
+      this.props.dispatch({ type: 'shop/search' })
     }
   }
 

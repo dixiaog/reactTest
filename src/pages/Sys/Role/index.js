@@ -2,17 +2,18 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 09:25:23
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-18 15:31:14
+ * @Last Modified time: 2018-05-22 13:34:44
  * 角色列表
  */
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
-import { Button, Input, Divider } from 'antd'
+import { Input, Divider, message } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import AddRoles from './AddRoles'
 import DistributePower from './DistributePower'
 import styles from '../sys.less'
+import ButtonExt from '../../../components/ButtonExt/index'
 
 @connect(state => ({
   role: state.role,
@@ -28,7 +29,7 @@ export default class Role extends Component {
   }
   componentDidMount() {
     if (isRefresh()) {
-      this.props.dispatch({ type: 'role/fetch' })
+      this.props.dispatch({ type: 'role/search' })
     }
   }
   distribute = (record) => {
@@ -46,7 +47,7 @@ export default class Role extends Component {
     })
   }
   render() {
-    const { list, total, page, loading, searchParam } = this.props.role
+    const { list, total, page, loading, searchParam, selectedRows, selectedRowKeys } = this.props.role
     //  selectedRows,
     const columns = [{
         title: '序号',
@@ -97,8 +98,20 @@ export default class Role extends Component {
         }
       },
     ]
+    const buttonValues = {
+      name: '删除角色',
+      clickAct: () => message.success(`删除角色${selectedRowKeys}`),
+      isAlert: !selectedRows.length,
+      alertMsg: '请选择角色',
+      type: 'default'
+    }
+    const buttonRole = {
+      name: '添加角色',
+      clickAct: () => this.setState({ roleVisible: true }),
+    }
     const actionBar = [
-      <Button type="primary" size="small" onClick={() => this.setState({ roleVisible: true })}>添加角色</Button>,
+      <ButtonExt {...buttonRole}/>,
+      <ButtonExt {...buttonValues}/>,
     ]
     const searchBar = [
       {

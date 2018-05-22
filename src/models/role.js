@@ -15,19 +15,19 @@ export default {
   },
 
   effects: {
-    *fetch({ payload }, { call, put, select }) {
-      yield put({
-        type: 'changeState',
-        payload: { loading: true },
-      })
-      const searchParam = payload && payload.searchParam ? payload.searchParam : yield select(state => state.role.searchParam)
-      const page = payload && payload.page ? payload.page : Object.assign(yield select(state => state.role.page))
-      const response = yield call(getRoleList, { ...searchParam, ...page })
-      yield put({
-        type: 'changeState',
-        payload: { ...response.data, total: response.data.total, loading: false },
-      })
-    },
+    // *fetch({ payload }, { call, put, select }) {
+    //   yield put({
+    //     type: 'changeState',
+    //     payload: { loading: true },
+    //   })
+    //   const searchParam = payload && payload.searchParam ? payload.searchParam : yield select(state => state.role.searchParam)
+    //   const page = payload && payload.page ? payload.page : Object.assign(yield select(state => state.role.page))
+    //   const response = yield call(getRoleList, { ...searchParam, ...page })
+    //   yield put({
+    //     type: 'changeState',
+    //     payload: { ...response.data, total: response.data.total, loading: false },
+    //   })
+    // },
     *search({ payload }, { call, put, select }) {
       const statePage = yield select(state => state.role.page)
       const page = payload && payload.page ? Object.assign(statePage, payload.page) : statePage

@@ -18,7 +18,7 @@ export default class User extends Component {
   }
   componentDidMount() {
     if (isRefresh()) {
-      this.props.dispatch({ type: 'user/fetch' })
+      this.props.dispatch({ type: 'user/search' })
     }
   }
 
