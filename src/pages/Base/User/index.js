@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
-import { Tag, Button, Input } from 'antd'
+import { Tag, Input } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import Role from './Role'
 import styles from '../base.less'
+import ButtonExt from '../../../components/ButtonExt/index'
 
 @connect(state => ({
   user: state.user,
@@ -93,8 +94,15 @@ export default class User extends Component {
         },
       },
     ]
+    const buttonValues = {
+      name: '角色分配',
+      clickAct: () => this.setState({ role: true }),
+      isAlert: !selectedRows.length,
+      alertMsg: '请选择角色',
+    }
     const actionBar = [
-      <Button type="primary" size="small" disabled={!selectedRows.length} onClick={() => this.setState({ role: true })}>角色分配</Button>,
+      // <Button type="primary" size="small" disabled={!selectedRows.length} onClick={() => this.setState({ role: true })}>角色分配</Button>,
+      <ButtonExt {...buttonValues}/>,
     ]
     const searchBar = [
       {

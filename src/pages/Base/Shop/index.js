@@ -5,6 +5,7 @@ import { Tag, Input, Popconfirm, Button, Divider } from 'antd'
 import { isRefresh } from '../../../utils/utils'
 import ShopModal from './ShopModal'
 import styles from '../base.less'
+import ButtonExt from '../../../components/ButtonExt/index'
 
 @connect(state => ({
   shop: state.shop,
@@ -92,8 +93,13 @@ export default class Shop extends Component {
         },
       },
     ]
+    const buttonValues = {
+      name: '新增店铺',
+      clickAct: () => this.setState({ shop: true }),
+    }
     const actionBar = [
-      <Button type="primary" size="small" onClick={() => this.setState({ shop: true })}>新增店铺</Button>,
+      // <Button type="primary" size="small" onClick={() => this.setState({ shop: true })}>新增店铺</Button>,
+      <ButtonExt {...buttonValues}/>,
     ]
     const searchBar = [
       {

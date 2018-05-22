@@ -2,7 +2,7 @@
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-22 13:35:04
+ * @Last Modified time: 2018-05-22 14:50:24
  * 数据字典
  */
 
@@ -13,6 +13,7 @@ import PublicTable from '../../../components/PublicTable'
 import { isRefresh } from '../../../utils/utils'
 import DicModal from './DicModal'
 import styles from '../base.less'
+import ButtonExt from '../../../components/ButtonExt/index'
 
 @connect(state => ({
     dictionary: state.dictionary,
@@ -77,8 +78,13 @@ export default class Dictionary extends Component {
       },
     },
   ]
+  const buttonValues = {
+    name: '添加字典',
+    clickAct: () => this.setState({ show: true }),
+  }
   const actionBar = [
-    <Button type="primary" size="small" onClick={() => this.setState({ show: true })}>添加字典</Button>,
+    // <Button type="primary" size="small" onClick={() => this.setState({ show: true })}>添加字典</Button>,
+    <ButtonExt {...buttonValues}/>,
   ]
     // 表格参数
     const tableProps = {
