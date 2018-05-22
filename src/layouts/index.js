@@ -19,9 +19,9 @@ class BaseLayout extends React.Component {
     if (pathname === '/login') {
       return <Login />
     } else if (window.localStorage.getItem('token')) {
-      let flag = []
+      let chooseTab = []
       if (menu && menu.length) {
-        flag = menu.filter(ele => ele.url === pathname)
+        chooseTab = menu.filter(ele => ele.url === pathname)
         const index = tabList.findIndex(ele => ele.url === pathname)
         if (index === -1) {
           const index = menu.findIndex(ele => ele.url === pathname)
@@ -34,7 +34,7 @@ class BaseLayout extends React.Component {
           }
         }
       }
-      if (flag.length) {
+      if (chooseTab.length) {
         return (
           <LocaleProvider locale={zh_CN}>
             <div>
@@ -49,7 +49,6 @@ class BaseLayout extends React.Component {
         )
       }
     } else {
-      // return <Redirect to="/login" />
       return <Error401 />
     }
   }

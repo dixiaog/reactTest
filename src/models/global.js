@@ -26,37 +26,27 @@ export default {
       tab: '店铺管理',
       url: '/base/shop',
     }, {
-      key: '/category',
-      tab: '商品类目',
-      url: '/base/category',
-    }, {
-      key: '/software',
-      tab: '软件列表',
-      url: '/base/software',
-    },{
       key: '/role',
       tab: '角色列表',
       url: '/sys/role',
-    }, {
-      key: '/power',
-      tab: '权限管理',
-      url: '/sys/power',
-    }, {
-      key: '/menu',
-      tab: '菜单管理',
-      url: '/sys/menu',
-    }, {
-      key: '/task',
-      tab: '任务管理',
-      url: '/sys/task',
     }],
     TabList: [{
-      text: '基础信息',
+      text: '首页',
       children: [{
         key: '/',
         tab: '首页',
         url: '/',
-      }, {
+      }],
+    }, {
+      text: '系统设置',
+      children: [{
+        key: '/role',
+        tab: '角色列表',
+        url: '/sys/role',
+      }],
+    }, {
+      text: '基础信息',
+      children: [{
         key: '/user',
         tab: '用户列表',
         url: '/base/user',
@@ -68,33 +58,6 @@ export default {
         key: '/shop',
         tab: '店铺管理',
         url: '/base/shop',
-      }, {
-        key: '/category',
-        tab: '商品类目',
-        url: '/base/category',
-      }, {
-        key: '/software',
-        tab: '软件列表',
-        url: '/base/software',
-      }],
-    },{
-      text: '系统设置',
-      children: [{
-        key: '/role',
-        tab: '角色列表',
-        url: '/sys/role',
-      }, {
-        key: '/power',
-        tab: '权限管理',
-        url: '/sys/power',
-      }, {
-        key: '/menu',
-        tab: '菜单管理',
-        url: '/sys/menu',
-      }, {
-        key: '/task',
-        tab: '任务管理',
-        url: '/sys/task',
       }],
     }],
     title: '首页',

@@ -8,7 +8,7 @@ import styles from './index.less'
 @connect(state => ({
   global: state.global,
 }))
-class BaseLayout extends React.Component {
+class Exception extends React.Component {
   render () {
     const { className, linkElement = 'a', type, title, desc, img, actions, ...rest } = this.props
     const pageType = type in config ? type : '404'
@@ -39,4 +39,4 @@ class BaseLayout extends React.Component {
   }
 }
 
-export default (BaseLayout)
+export default (Exception)
