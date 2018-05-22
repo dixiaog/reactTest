@@ -2,7 +2,7 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 09:25:23
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-22 13:34:44
+ * @Last Modified time: 2018-05-22 15:37:37
  * 角色列表
  */
 import React, { Component } from 'react'
@@ -66,25 +66,25 @@ export default class Role extends Component {
         title: '角色简称',
         dataIndex: 'roleName',
         key: 'roleName',
-        width: 60,
+        width: 120,
       },
       {
         title: '角色名称',
         dataIndex: 'title',
         key: 'title',
-        width: 100,
+        width: 120,
       },
       {
         title: '资源',
         dataIndex: 'powerlist',
         key: 'powerlist',
-        width: 600,
+        width: 550,
       },
       {
         title: '操作',
         dataIndex: 'do',
         key: 'do',
-        width: 100,
+        // width: 100,
         render: (text, record) => {
           return(
             <div>
@@ -135,6 +135,7 @@ export default class Role extends Component {
       namespace: 'role',
       searchParam,
       searchBar,
+      scoll: { x: 950 }
     }
     return (
       <div>

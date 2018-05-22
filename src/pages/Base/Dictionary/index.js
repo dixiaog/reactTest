@@ -2,7 +2,7 @@
  * @Author: jiangteng
  * @Date: 2017-12-22 17:40:30
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-22 14:50:24
+ * @Last Modified time: 2018-05-22 15:39:34
  * 数据字典
  */
 
@@ -46,7 +46,7 @@ export default class Dictionary extends Component {
       title: '序号',
       dataIndex: 'key',
       key: 'key',
-      width: 120,
+      width: 80,
       render: (text, record, index) => {
         return (
           <span>
@@ -59,18 +59,18 @@ export default class Dictionary extends Component {
       title: '名称',
       dataIndex: 'name',
       key: 'name',
-      width: 120,
+      width: 150,
     },
     {
       title: '说明',
       dataIndex: 'description',
       key: 'description',
-      width: 120,
+      width: 150,
     },
     {
       title: '操作',
       key: 'operation',
-      width: 100,
+      // width: 150,
       render: (text, record) => {
         return (
           <a onClick={() => this.setState({ show: true, record })}>编辑</a>
@@ -99,6 +99,7 @@ export default class Dictionary extends Component {
       namespace: 'dictionary',
       searchParam,
       searchBar,
+      scroll: { x: 530 },
     }
 
     return (
