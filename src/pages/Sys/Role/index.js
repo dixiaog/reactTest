@@ -2,16 +2,18 @@
  * @Author: tanmengjia
  * @Date: 2018-05-16 09:25:23
  * @Last Modified by: tanmengjia
- * @Last Modified time: 2018-05-16 13:03:10
+ * @Last Modified time: 2018-05-22 15:37:37
  * 角色列表
  */
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
-import { Button, Input, Divider } from 'antd'
-import { shouldUpdate } from '../../../utils/utils'
+import { Input, Divider, message } from 'antd'
+import { isRefresh } from '../../../utils/utils'
 import AddRoles from './AddRoles'
 import DistributePower from './DistributePower'
+import styles from '../sys.less'
+import ButtonExt from '../../../components/ButtonExt/index'
 
 @connect(state => ({
   role: state.role,
@@ -26,8 +28,8 @@ export default class Role extends Component {
     }
   }
   componentDidMount() {
-    if (shouldUpdate()) {
-      this.props.dispatch({ type: 'role/fetch' })
+    if (isRefresh()) {
+      this.props.dispatch({ type: 'role/search' })
     }
   }
   distribute = (record) => {
@@ -45,7 +47,7 @@ export default class Role extends Component {
     })
   }
   render() {
-    const { list, total, page, loading, searchParam } = this.props.role
+    const { list, total, page, loading, searchParam, selectedRows, selectedRowKeys } = this.props.role
     //  selectedRows,
     const columns = [{
         title: '序号',
@@ -64,25 +66,25 @@ export default class Role extends Component {
         title: '角色简称',
         dataIndex: 'roleName',
         key: 'roleName',
-        width: 60,
+        width: 120,
       },
       {
         title: '角色名称',
         dataIndex: 'title',
         key: 'title',
-        width: 100,
+        width: 120,
       },
       {
         title: '资源',
         dataIndex: 'powerlist',
         key: 'powerlist',
-        width: 600,
+        width: 550,
       },
       {
         title: '操作',
         dataIndex: 'do',
         key: 'do',
-        width: 100,
+        // width: 100,
         render: (text, record) => {
           return(
             <div>
@@ -96,8 +98,20 @@ export default class Role extends Component {
         }
       },
     ]
+    const buttonValues = {
+      name: '删除角色',
+      clickAct: () => message.success(`删除角色${selectedRowKeys}`),
+      isAlert: !selectedRows.length,
+      alertMsg: '请选择角色',
+      type: 'default'
+    }
+    const buttonRole = {
+      name: '添加角色',
+      clickAct: () => this.setState({ roleVisible: true }),
+    }
     const actionBar = [
-      <Button type="primary" size="small" onClick={() => this.setState({ roleVisible: true })}>添加角色</Button>,
+      <ButtonExt {...buttonRole}/>,
+      <ButtonExt {...buttonValues}/>,
     ]
     const searchBar = [
       {
@@ -121,10 +135,13 @@ export default class Role extends Component {
       namespace: 'role',
       searchParam,
       searchBar,
+      scoll: { x: 950 }
     }
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         {this.state.roleVisible ? <AddRoles roleVisible={this.state.roleVisible} record={this.state.record} hideModal={() => this.setState({ roleVisible: false, record: null })} /> : null}
         {this.state.powerVisible ? <DistributePower powerVisible={this.state.powerVisible} record={this.state.record} hideModal={() => this.setState({ powerVisible: false, record: null })} /> : null}
       </div>

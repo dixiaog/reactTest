@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import PublicTable from '../../../components/PublicTable'
 import { Tag, Input, Popconfirm, Button, Divider } from 'antd'
-import { shouldUpdate } from '../../../utils/utils'
+import { isRefresh } from '../../../utils/utils'
 import ShopModal from './ShopModal'
+import styles from '../base.less'
+import ButtonExt from '../../../components/ButtonExt/index'
 
 @connect(state => ({
   shop: state.shop,
@@ -17,8 +19,8 @@ export default class Shop extends Component {
     }
   }
   componentDidMount() {
-    if (shouldUpdate()) {
-      this.props.dispatch({ type: 'shop/fetch' })
+    if (isRefresh()) {
+      this.props.dispatch({ type: 'shop/search' })
     }
   }
 
@@ -41,25 +43,26 @@ export default class Shop extends Component {
         title: '采购中心',
         dataIndex: 'procurementCenter',
         key: 'procurementCenter',
-        width: 60,
+        width: 120,
       },
       {
         title: '店铺编号',
         dataIndex: 'shopNo',
         key: 'shopNo',
-        width: 100,
+        width: 140,
       },
       {
         title: '店铺名称',
         dataIndex: 'shopName',
         key: 'shopName',
-        width: 100,
+        width: 140,
       },
       {
         title: '状态',
         dataIndex: 'shopStatus',
         key: 'shopStatus',
-        width: 80,
+        width: 140,
+        className: styles.columnCenter,
         render: (text) => {
           if (text) {
             return <Tag color="#108ee9">有效</Tag>
@@ -72,12 +75,12 @@ export default class Shop extends Component {
         title: '微信地址',
         dataIndex: 'wechatUrl',
         key: 'wechatUrl',
-        width: 100,
+        width: 150,
       },
       {
         title: '操作',
         key: 'operation',
-        width: 100,
+        // width: 140,
         render: (text, record) => {
           return (
             <div>
@@ -91,8 +94,13 @@ export default class Shop extends Component {
         },
       },
     ]
+    const buttonValues = {
+      name: '新增店铺',
+      clickAct: () => this.setState({ shop: true }),
+    }
     const actionBar = [
-      <Button type="primary" size="small" onClick={() => this.setState({ shop: true })}>新增店铺</Button>,
+      // <Button type="primary" size="small" onClick={() => this.setState({ shop: true })}>新增店铺</Button>,
+      <ButtonExt {...buttonValues}/>,
     ]
     const searchBar = [
       {
@@ -116,10 +124,13 @@ export default class Shop extends Component {
       namespace: 'shop',
       searchParam,
       searchBar,
+      scroll: { x: 890 },
     }
     return (
       <div>
-        <PublicTable {...tableProps} />
+        <div className={styles.tableList}>
+          <PublicTable {...tableProps} />
+        </div>
         <ShopModal show={this.state.shop} hideModal={() => this.setState({ shop: false, record: {} })} record={this.state.record} />
       </div>
     )

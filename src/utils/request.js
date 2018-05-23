@@ -55,7 +55,7 @@ export default function request(url, options) {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      'Authorization': `Basic ${getLocalStorageItem('JT')}`,
+      'Authorization': `Basic ${getLocalStorageItem('token')}`,
       ...newOptions.headers,
     }
     newOptions.body = JSON.stringify(newOptions.body)

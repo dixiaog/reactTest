@@ -65,7 +65,7 @@ export default class Login extends Component {
     const { getFieldDecorator } = form
     const { type } = this.state
     return (
-      <DocumentTitle title={`雪冰电商-${this.props.global.title}`}>
+      <DocumentTitle title={`测试-${this.props.global.title}`}>
         <div className={styles.login}>
           <div className={styles.main}>
             <Form onSubmit={this.handleSubmit}>
@@ -74,7 +74,7 @@ export default class Login extends Component {
                   {login.status === 'error' && login.type === 'account' && login.submitting === false && this.renderMessage('账户或密码错误')}
                   <FormItem>
                     {getFieldDecorator('userNo', {
-                      initialValue: '001549',
+                      initialValue: 'admin',
                       rules: [
                         {
                           required: type === 'account',
@@ -97,23 +97,23 @@ export default class Login extends Component {
                 </TabPane>
               </Tabs>
               <FormItem className={styles.additional}>
-                {getFieldDecorator('remember', {
+                {/* {getFieldDecorator('remember', {
                   valuePropName: 'checked',
                   initialValue: true,
-                })(<Checkbox className={styles.autoLogin}>自动登录</Checkbox>)}
-                <a className={styles.forgot} href="">
+                })(<Checkbox className={styles.autoLogin}>自动登录</Checkbox>)} */}
+                {/* <a className={styles.forgot} href="">
                   忘记密码
-                </a>
+                </a> */}
                 <Button size="large" loading={login.submitting} className={styles.submit} type="primary" htmlType="submit">
                   登录
                 </Button>
               </FormItem>
             </Form>
-            <div className={styles.other}>
+            {/* <div className={styles.other}>
               <Link className={styles.register} to="/user/register">
                 注册账户
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </DocumentTitle>

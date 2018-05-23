@@ -18,8 +18,9 @@ export default {
           payload: { toIndex: true },
         })
         window.localStorage.setItem('userName', response.userName)
-        window.localStorage.setItem('JT', response.token)
-        window.localStorage.setItem('panes', JSON.stringify([{
+        window.localStorage.setItem('token', response.token)
+        window.localStorage.setItem('companyName', response.companyName)
+        window.localStorage.setItem('tabList', JSON.stringify([{
           key: '1',
           title: '首页', 
           url: '/',

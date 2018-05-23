@@ -8,7 +8,7 @@ import styles from './index.less'
 @connect(state => ({
   global: state.global,
 }))
-class BaseLayout extends React.Component {
+class Exception extends React.Component {
   render () {
     const { className, linkElement = 'a', type, title, desc, img, actions, ...rest } = this.props
     const pageType = type in config ? type : '404'
@@ -30,12 +30,7 @@ class BaseLayout extends React.Component {
                 createElement(linkElement, {
                   to: '/',
                   href: '/',
-                }, <Button type="primary" onClick={() => {
-                  this.props.dispatch({
-                    type: 'global/changeState',
-                    payload: { title: '首页', current: '/',  activeKey: '/' },
-                  })
-                }}>返回首页</Button>)
+                }, <Button type="primary">返回首页</Button>)
             }
           </div>
         </div>
@@ -44,4 +39,4 @@ class BaseLayout extends React.Component {
   }
 }
 
-export default (BaseLayout)
+export default (Exception)

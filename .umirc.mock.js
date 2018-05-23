@@ -1,20 +1,9 @@
 import mockjs from 'mockjs'
 
-/* 江腾测试数据  */
+// 测试数据
 import { getUserList } from './mock/base/user/getUserList'
-import { getDictionaryList } from './mock/base/dictionary/getDictionaryList'
-import { getWechatList } from './mock/base/wechat/getWechatList'
 import { getShopList } from './mock/base/shop/getShopList'
-import { getCategorytList } from './mock/base/category/getCategorytList'
-import { getSoftwareList } from './mock/base/software/getSoftwareList'
-import { getTaskList } from './mock/system/task/getTaskList'
-
-/* 江腾测试数据  */
-
-/* 谭梦佳测试数据  */
 import { getRoleList } from './mock/system/roleList/getRoleList'
-import { getPowerList } from './mock/system/power/getPowerList'
-/* 谭梦佳测试数据  */
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true'
@@ -38,32 +27,17 @@ const proxy = {
     },
   },
 
-  // 库存--采购管理
-  'POST /umi/login': { userName: '江腾', token: '111' },
+  // 登陆信息
+  'POST /umi/login': { userName: '测试111', token: '111', companyName: '测试公司' },
 
   // 基础-获取用户
   'POST /base/user/getUserList': getUserList,
 
-  // 基础-数据字典
-  'POST /base/dictionary/getDictionaryList': getDictionaryList,
-  
-  // 基础-微信用户
-  'POST /base/wechat/getWechatList': getWechatList,
-
-  // 基础-微信用户
+  // 基础-店铺信息
   'POST /base/shop/getShopList': getShopList,
-
-  // 基础-商品类目
-  'POST /base/category/getCategorytList': getCategorytList,
-  
-  // 基础-团软件列表
-  'POST /base/software/getSoftwareList': getSoftwareList,
   
   // 系统-角色列表
   'POST /system/roleList/getRoleList': getRoleList,
-
-  // 系统-权限管理
-  'POST /system/power/getPowerList': getPowerList,
   
 }
 

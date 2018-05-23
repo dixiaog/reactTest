@@ -6,10 +6,10 @@ html, body, :global(#root) {
   padding: 3px 12px;
   font-size: 13px;
 }
-.ant-dropdown-menu-item{
-  padding: 3px 12px;
-  font-size: 13px;
-}
+// .ant-dropdown-menu-item{
+//   padding: 3px 12px;
+//   font-size: 13px;
+// }
 .ant-modal-title{
   font-size: 14px;
 }
@@ -44,4 +44,19 @@ html, body, :global(#root) {
 .ant-message-notice-content {
   padding: 4px 16px;
   border-radius: 2px;
+}
+
+.tableList {
+  // .tableListOperator {
+  //   margin-bottom: 16px;
+  //   button {
+  //     margin-right: 8px;
+  //   }
+  // }
+  :global{
+    .ant-table-fixed-header .ant-table-scroll .ant-table-header{
+      overflow-y: hidden !important; 
+      margin-right: 15px;
+    }
+  }
 }

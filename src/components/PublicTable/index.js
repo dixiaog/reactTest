@@ -1,24 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import update from 'immutability-helper'
-import { Table, Row, Col, Form, Button, Popover, Checkbox, List, Icon } from 'antd'
+import { Table, Form, Button, Popover, Checkbox, List } from 'antd'
 import styles from './index.less'
+import SearchBars from '../SearchBar'
 
-const FormItem = Form.Item
-const itemCol = {
-  xs: { span: 24, offset: 0 },
-  sm: { span: 24, offset: 0 },
-  md: { span: 5, offset: 1 },
-  lg: { span: 5, offset: 1 },
-  xl: { span: 3, offset: 1 },
-}
-const itemFirstCol = {
-  xs: { span: 24, offset: 0 },
-  sm: { span: 24, offset: 0 },
-  md: { span: 5, offset: 0 },
-  lg: { span: 3, offset: 0 },
-  xl: { span: 3, offset: 0 },
-}
 @connect(state => ({
   global: state.global,
 }))
@@ -48,46 +34,6 @@ export default class PublicTable extends Component {
       listColumns: newArray,
     })
   }
-  handleSubmit = () => {
-    this.props.form.validateFields((err, values) => {
-      this.props.dispatch({
-        type: `${this.props.namespace}/search`,
-        payload: { searchParam: values },
-      })
-      this.props.dispatch({
-        type: `${this.props.namespace}/changeState`,
-        payload: { searchParam: values, loading: true },
-      })
-    })
-  }
-  handleReset = () => {
-    this.props.form.resetFields()
-    if (this.props.global.refresh) {
-      const model = window.localStorage.getItem('model')
-      const url = window.location.href.split('/')[window.location.href.split('/').length - 1]
-      this.props.dispatch({
-        type: `${url}/fetch`,
-        payload: { searchParam: JSON.parse(model)[url].searchParam, page: {} },
-      })
-      this.props.dispatch({
-        type: `${url}/changeState`,
-        payload: { searchParam: JSON.parse(model)[url].searchParam, page: {} },
-      })
-      this.props.dispatch({
-        type: 'global/changeState',
-        payload: { refresh: false },
-      })
-    } else {
-      this.props.dispatch({
-        type: `${this.props.namespace}/search`,
-        payload: { searchParam: {} },
-      })
-      this.props.dispatch({
-        type: `${this.props.namespace}/changeState`,
-        payload: { searchParam: {}, loading: true },
-      })
-    }
-  }
 
   onChange = (title) => {
     const listColumns = this.state.listColumns
@@ -106,8 +52,6 @@ export default class PublicTable extends Component {
     })
   }
   render() {
-    const { refresh } = this.props.global
-    const { getFieldDecorator } = this.props.form
     const { data, rowKey, scroll, current, total, pageSize,
       actionBar, dispatch, loading, namespace, searchParam, searchBar } = this.props
     const rowSelection = {
@@ -172,65 +116,19 @@ export default class PublicTable extends Component {
         renderItem={item => (<List.Item><Checkbox onChange={this.onChange.bind(this, item.title)} checked={item.checked} style={{ marginRight: 10, fontSize: 10 }} />{item.title}</List.Item>)}
       />
     )
-    refresh ? this.handleReset() : null
-    const formItem = (ele, index, initVal, flag) => {
-      return (
-        <Col {...flag} key={index}>
-          <FormItem key={index}>
-            {getFieldDecorator(ele.decorator, {
-              initialValue: initVal,
-            })(
-              ele.components
-            )}
-            </FormItem>
-        </Col>
-      )
+    const searchValues = {
+      searchBar,
+      searchParam,
+      namespace,
+      collapse: this.state.collapse,
+      dispatch,
+      changeBars: () => this.setState({ collapse: !this.state.collapse }),
     }
     return (
       <div>
-        <div className={styles.searchBar}>
-          <span className={styles.panelLeft}>
-            <Form>
-              <Row>
-                {searchBar && searchBar.length ? searchBar.map((ele, index) => {
-                  let initVal = searchParam && searchParam[ele.decorator] !== undefined ? searchParam[ele.decorator] : undefined
-                  if (index <= 5) {
-                    if (index % 6 === 0) {
-                      return (
-                        formItem(ele, index, initVal, itemFirstCol)
-                      )
-                    } else {
-                      return (
-                        formItem(ele, index, initVal, itemCol)
-                      )
-                    }
-                  } else {
-                    if (index % 6 === 0 && this.state.collapse) {
-                      return (
-                        formItem(ele, index, initVal, itemFirstCol)
-                      )
-                    } else if (this.state.collapse) {
-                      return (
-                        formItem(ele, index, initVal, itemCol)
-                      )
-                    }
-                  }
-                }
-                ) : null}
-                </Row>
-            </Form>
-          </span>
-          <span style={{ float: 'right', marginTop: 14, marginRight: 9 }}>
-            { searchBar && searchBar.length ? <span>
-              <Button type="primary" onClick={this.handleSubmit} size="small">搜索</Button>
-              <Button style={{ marginLeft: 10 }} onClick={this.handleReset} size="small">清空</Button>
-            </span> : null}
-            {searchBar && searchBar.length > 6 ?
-              <a onClick={() => this.setState({ collapse: !this.state.collapse })} style={{ marginLeft: 10, fontSize: 10 }}>{this.state.collapse ?
-                '收起' : '展开'}<Icon type={`${this.state.collapse ?
-                  'up' : 'down'}`} /></a> : ''}
-          </span>
-        </div>
+        {/* 搜索框 */}
+        <SearchBars {...searchValues}/>
+        {/* 操作框 */}
         <div className={styles.antBtn}>
           {actionBar && actionBar.length ? actionBar.map((ele, index) => 
             <span key={index} className={styles.btn}>{ele}</span>
@@ -241,13 +139,14 @@ export default class PublicTable extends Component {
             </Popover>
           </span>
         </div>
+        {/* 列表 */}
         <div className={data.length ? this.state.collapse ? styles.tableCollapse : styles.table : styles.tableNoData}>
           <Table
             columns={this.state.columns}
             dataSource={data}
             rowKey={record => record[rowKey]}
             size="small"
-            scroll={ scroll ? Object.assign(scroll, { y: document.body.clientHeight - 240 }) : Object.assign({}, { y: document.body.clientHeight - 240 })}
+            scroll={ scroll && scroll.y ? scroll : (scroll ? Object.assign(scroll, { y: document.body.clientHeight - 240 }) : { y: document.body.clientHeight - 240 })}
             rowSelection={rowSelection}
             pagination={pagination}
             loading={loading}

@@ -1,5 +1,5 @@
 import request from '../utils/request'
-import config from '../utils/config'
+// import config from '../utils/config'
 
 // 登录
 export async function fakeAccountLogin(params) {

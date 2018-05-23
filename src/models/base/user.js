@@ -1,4 +1,4 @@
-import { getUserList } from '../services/base'
+import { getUserList } from '../../services/base'
 
 export default {
   namespace: 'user',
@@ -14,19 +14,19 @@ export default {
   },
 
   effects: {
-    *fetch({ payload }, { call, put, select }) {
-      yield put({
-        type: 'changeState',
-        payload: { loading: true },
-      })
-      const searchParam = payload && payload.searchParam ? payload.searchParam : yield select(state => state.user.searchParam)
-      const page = payload && payload.page ? payload.page : Object.assign(yield select(state => state.user.page))
-      const {data} = yield call(getUserList, { ...searchParam, ...page })
-      yield put({
-        type: 'changeState',
-        payload: { ...data, total: data.total, loading: false },
-      })
-    },
+    // *fetch({ payload }, { call, put, select }) {
+    //   yield put({
+    //     type: 'changeState',
+    //     payload: { loading: true },
+    //   })
+    //   const searchParam = payload && payload.searchParam ? payload.searchParam : yield select(state => state.user.searchParam)
+    //   const page = payload && payload.page ? payload.page : Object.assign(yield select(state => state.user.page))
+    //   const {data} = yield call(getUserList, { ...searchParam, ...page })
+    //   yield put({
+    //     type: 'changeState',
+    //     payload: { ...data, total: data.total, loading: false },
+    //   })
+    // },
     *search({ payload }, { call, put, select }) {
       const statePage = yield select(state => state.user.page)
       const page = payload && payload.page ? Object.assign(statePage, payload.page) : statePage
