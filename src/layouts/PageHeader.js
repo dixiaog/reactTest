@@ -196,7 +196,8 @@ export default class PageHeader extends Component {
     const menu = (
       <Menu className={styles.dropMenu} onClick={this.onUserClick}>
         <Menu.Item key='myCompany'><Icon type="home" />
-          {companyName}
+          {companyName.length > 8 ?
+          <Tooltip placement="topRight" title={companyName}>{companyName.substr(0,7)}......</Tooltip> : companyName}
         </Menu.Item>
       </Menu>
     )

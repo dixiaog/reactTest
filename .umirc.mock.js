@@ -28,7 +28,7 @@ const proxy = {
   },
 
   // 登陆信息
-  'POST /umi/login': { userName: '测试111', token: '111', companyName: '测试公司', success: true },
+  'POST /umi/login': { userName: '测试用户', token: '111', companyName: '测试公司名字长度需要设置很长', success: true },
 
   // 基础-获取用户
   'POST /base/user/getUserList': getUserList,
