@@ -1,4 +1,4 @@
-import { getRoleList, getChooseData } from '../services/system'
+import { getRoleList, getChooseData } from '../../services/system'
 
 export default {
   namespace: 'role',

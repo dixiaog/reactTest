@@ -1,4 +1,4 @@
-import { getShoptList } from '../services/base'
+import { getShoptList } from '../../services/base'
 
 export default {
   namespace: 'shop',

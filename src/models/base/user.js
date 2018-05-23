@@ -1,4 +1,4 @@
-import { getUserList } from '../services/base'
+import { getUserList } from '../../services/base'
 
 export default {
   namespace: 'user',

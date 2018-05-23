@@ -18,10 +18,6 @@ export default {
       tab: '用户列表',
       url: '/base/user',
     }, {
-      key: '/dictionary',
-      tab: '数据字典',
-      url: '/base/dictionary',
-    }, {
       key: '/shop',
       tab: '店铺管理',
       url: '/base/shop',
@@ -50,10 +46,6 @@ export default {
         key: '/user',
         tab: '用户列表',
         url: '/base/user',
-      }, {
-        key: '/dictionary',
-        tab: '数据字典',
-        url: '/base/dictionary',
       }, {
         key: '/shop',
         tab: '店铺管理',
