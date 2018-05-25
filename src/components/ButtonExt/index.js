@@ -18,10 +18,10 @@ export default class ButtonExt extends Component {
     }
   }
   render() {
-    const { name, type } = this.props
+    const { name, type, size } = this.props
     return(
       <Button
-        size="small"
+        size={size ? size : 'small'}
         type={type ? type : 'primary'}
         onClick={this.onClick}
       >
